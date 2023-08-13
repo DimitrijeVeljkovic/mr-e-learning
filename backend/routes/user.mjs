@@ -3,6 +3,8 @@ import User from '../models/user.mjs';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import tokenCheckMiddleware from '../middleware/token-check.mjs';
+import Course from '../models/course.mjs';
+import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
@@ -39,7 +41,7 @@ router.post('/login', (req, res, next) => {
         .then(user => {
             if (!user) {
                 return res.status(401).json({
-                    message: "Auth failed! Email does not exist!"
+                    message: 'Auth failed! Email does not exist!'
                 });
             }
             foundUser = user;
@@ -49,7 +51,7 @@ router.post('/login', (req, res, next) => {
         .then(result => {
             if (!result) {
                 return res.status(401).json({
-                    message: "Auth failed! Incorrect password!"
+                    message: 'Auth failed! Incorrect password!'
                 });
             }
             const token = jwt.sign(
@@ -65,8 +67,84 @@ router.post('/login', (req, res, next) => {
         })
         .catch(error => {
             return res.status(401).json({
-                message: "Auth failed!"
+                message: 'Auth failed!'
             });
+        });
+});
+
+router.put('/send-code', (req, res, next) => {
+    const email = req.body.email;
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+
+    const html = `
+        <h1>Reset your password</h1>
+        <h3>
+            Verification code: 
+            <span style="background: red; padding: 5px; border-radius: 5px; color: whitesmoke;">${verificationCode}</span>
+        <h3>
+    `
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'mrelearning100@gmail.com',
+          pass: 'hzxevhnkzumdtutd'
+        },
+        secure: true
+    });
+      
+    const mailOptions = {
+        from: 'mrelearning100@gmail.com',
+        to: email,
+        subject: 'Verification code for MR-E-LEARNING',
+        html
+    };
+    
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            res.status(500).json(error);
+        } else {
+            User.findOneAndUpdate({ email: email }, { $set: { verificationCode: verificationCode } }, { new: true })
+                .then(user => {
+                    if (!user) {
+                        return res.status(404).json({
+                            message: 'Email does not exist!'
+                        });
+                    }
+
+                    res.status(200).json({
+                        message: 'Verification code added for user!'
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
+        }
+    });
+});
+
+router.put('/reset-password', (req, res, next) => {
+    const email = req.body.email;
+    const verificationCode = req.body.verificationCode;
+    const newPassword = req.body.newPassword;
+
+    bcrypt.hash(newPassword, 10)
+        .then(passwordHash => {
+            User.findOneAndUpdate({ email: email, verificationCode: verificationCode }, { $set: { password: passwordHash, verificationCode: '' } }, { new: true })
+                .then(user => {
+                    if (!user) {
+                        return res.status(404).json({
+                            message: 'Email or verification code is incorrect!'
+                        });
+                    }
+
+                    res.status(200).json({
+                        message: 'Pasword changed successfully!'
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
         });
 });
 
@@ -211,6 +289,233 @@ router.post('/:userId/add-note/:courseId', tokenCheckMiddleware, (req, res, next
         .catch(error => {
             res.status(500).json(error);
         })
+});
+
+router.post('/:userId/submit-test/:courseId', tokenCheckMiddleware, (req, res, next) => {
+    const userId = req.params.userId;
+    const courseId = req.params.courseId;
+    const submittedAnswers = req.body;
+
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            Course.findById(courseId)
+                .then(course => {
+                    if (!course) {
+                        return res.status(404).json({
+                            message: 'Course not found!'
+                        });
+                    }
+
+                    let correctCount = 0;
+                    submittedAnswers.forEach(submittedAnswer => {
+                        const correctAnswer = course.finalTest.find(q => q.question === submittedAnswer.question).correctAnswer;
+
+                        if (submittedAnswer.answer === correctAnswer) {
+                            correctCount++;
+                        }
+                    })
+
+                    const percentCorrect = (correctCount / course.finalTest.length) * 100;
+                    if (percentCorrect >= 85) {
+                        const inProgressCourseIndex = user.inProgressCourses.findIndex(course => course.courseId === courseId);
+
+                        if (inProgressCourseIndex !== -1) {
+                            const finishedCourse = {
+                                courseId,
+                                notes: [...user.inProgressCourses[inProgressCourseIndex].notes],
+                                dateFinished: new Date(),
+                                percentage: percentCorrect
+                            };
+
+                            user.finishedCourses.push(finishedCourse);
+                            user.inProgressCourses.splice(inProgressCourseIndex, 1);
+
+                            user.save()
+                                .then(() => {
+                                    return res.status(200).json({
+                                        message: 'Test passed!',
+                                        finishedCourse
+                                    })
+                                });
+                        }
+                    } else {
+                        res.status(404).json({
+                            message: 'Test is not passed! Try again!',
+                            percentCorrect
+                        })
+                    }
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                })
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        })
+});
+
+router.post('/:userId/submit-test/:courseId', tokenCheckMiddleware, (req, res, next) => {
+    const userId = req.params.userId;
+    const courseId = req.params.courseId;
+    const submittedAnswers = req.body;
+
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            Course.findById(courseId)
+                .then(course => {
+                    if (!course) {
+                        return res.status(404).json({
+                            message: 'Course not found!'
+                        });
+                    }
+
+                    let correctCount = 0;
+                    submittedAnswers.forEach(submittedAnswer => {
+                        const correctAnswer = course.finalTest.find(q => q.question === submittedAnswer.question).correctAnswer;
+
+                        if (submittedAnswer.answer === correctAnswer) {
+                            correctCount++;
+                        }
+                    })
+
+                    const percentCorrect = (correctCount / course.finalTest.length) * 100;
+                    if (percentCorrect >= 85) {
+                        const inProgressCourseIndex = user.inProgressCourses.findIndex(course => course.courseId === courseId);
+
+                        if (inProgressCourseIndex !== -1) {
+                            const finishedCourse = {
+                                courseId,
+                                notes: [...user.inProgressCourses[inProgressCourseIndex].notes],
+                                dateFinished: new Date(),
+                                percentage: percentCorrect
+                            };
+
+                            user.finishedCourses.push(finishedCourse);
+                            user.inProgressCourses.splice(inProgressCourseIndex, 1);
+
+                            user.save()
+                                .then(() => {
+                                    return res.status(200).json({
+                                        message: 'Test passed!',
+                                        finishedCourse
+                                    })
+                                });
+                        }
+                    } else {
+                        res.status(404).json({
+                            message: 'Test is not passed! Try again!',
+                            percentCorrect
+                        })
+                    }
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                })
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        })
+});
+
+router.get('/:userId/bookmarked-courses', tokenCheckMiddleware, (req, res, next) => {
+    const userId = req.params.userId;
+
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            Course.find({ _id: { $in: user.bookmarkedCourses } })
+                .then(bookmarkedCourses => {
+                    res.status(200).json({
+                        bookmarkedCourses
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+});
+
+router.get('/:userId/in-progress-courses', tokenCheckMiddleware, (req, res, next) => {
+    const userId = req.params.userId;
+
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            Course.find({ _id: { $in: user.inProgressCourses.map(course => course.courseId) } })
+                .then(inProgressCourses => {
+                    res.status(200).json({
+                        inProgressCourses: inProgressCourses.map(course => ({
+                            course,
+                            notes: user.inProgressCourses.find(c => c.courseId === String(course._id)).notes
+                        }))
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+});
+
+router.get('/:userId/finished-courses', tokenCheckMiddleware, (req, res, next) => {
+    const userId = req.params.userId;
+
+    User.findById(userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            Course.find({ _id: { $in: user.finishedCourses.map(course => course.courseId) } })
+                .then(finishedCourses => {
+                    res.status(200).json({
+                        finishedCourses: finishedCourses.map(course => {
+                            const finishedCourse = user.finishedCourses.find(c => c.courseId === String(course._id))
+                            return {
+                                course,
+                                notes: finishedCourse.notes,
+                                dateFinished: finishedCourse.dateFinished,
+                                percentage: finishedCourse.percentage
+                            }
+                        })
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
 });
 
 export default router;

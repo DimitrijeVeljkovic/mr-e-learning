@@ -14,8 +14,11 @@ const userSchema = mongoose.Schema({
     bookmarkedCourses: [String],
     finishedCourses: [{
         courseId: String,
+        dateFinished: Date,
+        percentage: Number,
         notes: [String]
-    }]
+    }],
+    verificationCode: String
 });
 
 userSchema.plugin(uniqueValidator);
