@@ -4,6 +4,7 @@ import tokenCheckMiddleware from '../middleware/token-check.mjs';
 
 const router = express.Router();
 
+// Return all courses from DB
 router.get('', (req, res, next) => {
     Course.find().then(courses => {
         res.status(200).json({
@@ -11,7 +12,8 @@ router.get('', (req, res, next) => {
         });
     });
 });
-  
+
+// Add new rating for course
 router.post('/:courseId/add-rating', tokenCheckMiddleware, (req, res, next) => {
     const courseId = req.params.courseId;
     const { userName, rating } = req.body;
@@ -32,6 +34,7 @@ router.post('/:courseId/add-rating', tokenCheckMiddleware, (req, res, next) => {
     });
 });
   
+// Add new comment for course
 router.post('/:courseId/add-comment', tokenCheckMiddleware, (req, res, next) => {
     const courseId = req.params.courseId;
     const { userName, comment } = req.body;

@@ -8,6 +8,7 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+// User signup
 router.post('/signup', (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then(passwordHash => {
         const user = new User({
@@ -34,6 +35,7 @@ router.post('/signup', (req, res, next) => {
     });
 });
   
+// User login
 router.post('/login', (req, res, next) => {
     let foundUser;
 
@@ -72,6 +74,7 @@ router.post('/login', (req, res, next) => {
         });
 });
 
+// Send email with verification code and store it in DB for user
 router.put('/send-code', (req, res, next) => {
     const email = req.body.email;
     const verificationCode = Math.floor(100000 + Math.random() * 900000);
@@ -123,6 +126,7 @@ router.put('/send-code', (req, res, next) => {
     });
 });
 
+// Reset password for user with provided email and verification code
 router.put('/reset-password', (req, res, next) => {
     const email = req.body.email;
     const verificationCode = req.body.verificationCode;
@@ -148,6 +152,7 @@ router.put('/reset-password', (req, res, next) => {
         });
 });
 
+// Change data for user
 router.put('/:userId/change', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
     const data = req.body;
@@ -170,6 +175,7 @@ router.put('/:userId/change', tokenCheckMiddleware, (req, res, next) => {
         });
 });
 
+// Delete user from DB
 router.delete('/:userId/delete', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
 
@@ -190,6 +196,7 @@ router.delete('/:userId/delete', tokenCheckMiddleware, (req, res, next) => {
         });
 });
 
+// Add course in bookmark for user
 router.post('/:userId/bookmark-course', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
     const courseId = req.body.courseId;
@@ -221,6 +228,7 @@ router.post('/:userId/bookmark-course', tokenCheckMiddleware, (req, res, next) =
         });
 });
 
+// Add course inProgress for user
 router.post('/:userId/start-course', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
     const courseId = req.body.courseId;
@@ -255,6 +263,7 @@ router.post('/:userId/start-course', tokenCheckMiddleware, (req, res, next) => {
         });
 });
 
+// Add note by user for course
 router.post('/:userId/add-note/:courseId', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
     const courseId = req.params.courseId;
@@ -291,6 +300,7 @@ router.post('/:userId/add-note/:courseId', tokenCheckMiddleware, (req, res, next
         })
 });
 
+// Check correctness of the final test and move the course into finishedCourses if the test is passed
 router.post('/:userId/submit-test/:courseId', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
     const courseId = req.params.courseId;
@@ -360,75 +370,7 @@ router.post('/:userId/submit-test/:courseId', tokenCheckMiddleware, (req, res, n
         })
 });
 
-router.post('/:userId/submit-test/:courseId', tokenCheckMiddleware, (req, res, next) => {
-    const userId = req.params.userId;
-    const courseId = req.params.courseId;
-    const submittedAnswers = req.body;
-
-    User.findById(userId)
-        .then(user => {
-            if (!user) {
-                return res.status(404).json({
-                    message: 'User not found!'
-                });
-            }
-
-            Course.findById(courseId)
-                .then(course => {
-                    if (!course) {
-                        return res.status(404).json({
-                            message: 'Course not found!'
-                        });
-                    }
-
-                    let correctCount = 0;
-                    submittedAnswers.forEach(submittedAnswer => {
-                        const correctAnswer = course.finalTest.find(q => q.question === submittedAnswer.question).correctAnswer;
-
-                        if (submittedAnswer.answer === correctAnswer) {
-                            correctCount++;
-                        }
-                    })
-
-                    const percentCorrect = (correctCount / course.finalTest.length) * 100;
-                    if (percentCorrect >= 85) {
-                        const inProgressCourseIndex = user.inProgressCourses.findIndex(course => course.courseId === courseId);
-
-                        if (inProgressCourseIndex !== -1) {
-                            const finishedCourse = {
-                                courseId,
-                                notes: [...user.inProgressCourses[inProgressCourseIndex].notes],
-                                dateFinished: new Date(),
-                                percentage: percentCorrect
-                            };
-
-                            user.finishedCourses.push(finishedCourse);
-                            user.inProgressCourses.splice(inProgressCourseIndex, 1);
-
-                            user.save()
-                                .then(() => {
-                                    return res.status(200).json({
-                                        message: 'Test passed!',
-                                        finishedCourse
-                                    })
-                                });
-                        }
-                    } else {
-                        res.status(404).json({
-                            message: 'Test is not passed! Try again!',
-                            percentCorrect
-                        })
-                    }
-                })
-                .catch(error => {
-                    res.status(500).json(error);
-                })
-        })
-        .catch(error => {
-            res.status(500).json(error);
-        })
-});
-
+// Return all bookmarked courses for user
 router.get('/:userId/bookmarked-courses', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
 
@@ -455,6 +397,7 @@ router.get('/:userId/bookmarked-courses', tokenCheckMiddleware, (req, res, next)
         });
 });
 
+// Return all in progress courses for user
 router.get('/:userId/in-progress-courses', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
 
@@ -484,6 +427,7 @@ router.get('/:userId/in-progress-courses', tokenCheckMiddleware, (req, res, next
         });
 });
 
+// Return all finished courses for user
 router.get('/:userId/finished-courses', tokenCheckMiddleware, (req, res, next) => {
     const userId = req.params.userId;
 

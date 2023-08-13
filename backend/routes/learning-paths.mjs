@@ -3,6 +3,7 @@ import LearningPath from '../models/learning-path.mjs';
 
 const router = express.Router();
 
+// Return all learning paths from DB
 router.get('', (req, res, next) => {
     LearningPath.aggregate([
         {
