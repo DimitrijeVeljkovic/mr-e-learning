@@ -1,0 +1,28 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="12" *ngFor="let learningPath of learningPaths">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title class="ion-text-center">{{ learningPath.title }} Learning Path</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-accordion-group expand="inset">
+            <ion-accordion *ngFor="let course of learningPath.courses" [value]="course.title">
+              <ion-item slot="header" color="light">
+                <ion-label>{{ course.title }}</ion-label>
+              </ion-item>
+              <div class="ion-padding" slot="content">
+                {{ course.description }}
+                <div>
+                  <ion-button fill="clear">Start</ion-button>
+                  <ion-button fill="clear">Bookmark</ion-button>  
+                </div>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>  
+        </ion-card-content>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

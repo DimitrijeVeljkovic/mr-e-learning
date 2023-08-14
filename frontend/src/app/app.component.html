@@ -1,3 +1,44 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button> Sign Up </ion-button>
+      </ion-buttons>
+      <ion-title class="ion-text-center"> MR E-Learning </ion-title>
+      <ion-buttons slot="end">
+        <ion-button> Log In </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [scrollY]="false">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
+
+  <ion-footer>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="courses" [routerLink]="['/courses']">
+        <ion-icon name="book-outline"></ion-icon>
+        All Courses
+      </ion-tab-button>
+      <ion-tab-button tab="learning-paths" [routerLink]="['/learning-paths']">
+        <ion-icon name="analytics-outline"></ion-icon>
+        Learning Paths
+      </ion-tab-button>
+      <ion-tab-button tab="bookmarks">
+        <ion-icon name="bookmark-outline"></ion-icon>
+        Bookmarks
+      </ion-tab-button>
+      <ion-tab-button tab="in-progress">
+        <ion-icon name="refresh-outline"></ion-icon>
+        In Progress
+      </ion-tab-button>
+      <ion-tab-button tab="completed">
+        <ion-icon name="checkmark-done-outline"></ion-icon>
+        Completed
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-footer>
+
 </ion-app>
