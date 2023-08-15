@@ -8,12 +8,20 @@ import { CourseService } from 'src/app/services/course.service';
   styleUrls: ['./courses.page.scss'],
 })
 export class CoursesPage implements OnInit {
-  public courses: Course[] = [];
+  public allCourses: Course[] = [];
+  public filteredCourses: Course[] = [];
 
   constructor(private _courseService: CourseService) { }
 
   ngOnInit() {
-    this._courseService.getAllCourses().subscribe(res => this.courses = res.courses);
+    this._courseService.getAllCourses().subscribe(res => {
+      this.allCourses = res.courses;
+      this.filteredCourses = res.courses;
+    });
+  }
+
+  public handleSearch(event: any) {
+    this.filteredCourses = this.allCourses.filter(course => course.title.toUpperCase().includes(event.detail.value.toUpperCase()));
   }
 
 }

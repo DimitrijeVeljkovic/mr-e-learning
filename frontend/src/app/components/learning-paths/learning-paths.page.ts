@@ -9,11 +9,19 @@ import { LearningPathService } from 'src/app/services/learning-path.service';
 })
 export class LearningPathsPage implements OnInit {
   public learningPaths: LearningPath[] = [];
+  public filteredPaths: LearningPath[] = [];
 
   constructor(private _learningPathService: LearningPathService) { }
 
   ngOnInit() {
-    this._learningPathService.getAllLearningPaths().subscribe(res => this.learningPaths = res.learningPaths);
+    this._learningPathService.getAllLearningPaths().subscribe(res => {
+      this.learningPaths = res.learningPaths;
+      this.filteredPaths = res.learningPaths;
+    });
+  }
+
+  public handleSearch(event: any) {
+    this.filteredPaths = this.learningPaths.filter(path => path.title.toUpperCase().includes(event.detail.value.toUpperCase()));
   }
 
 }

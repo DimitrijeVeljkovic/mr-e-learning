@@ -1,3 +1,18 @@
 :host {
     overflow-y: auto;
+
+    ion-grid {
+        width: 100vw;
+    }
+
+    .learning-path-card {
+        position: relative;
+
+        .logo {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 60px;
+        }
+    }
 }

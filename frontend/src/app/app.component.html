@@ -2,12 +2,14 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button> Sign Up </ion-button>
-      </ion-buttons>
-      <ion-title class="ion-text-center"> MR E-Learning </ion-title>
+      <ion-title class="ion-text-start ion-padding"> MR E-Learning </ion-title>
       <ion-buttons slot="end">
+        <ion-button> Sign Up </ion-button>
         <ion-button> Log In </ion-button>
+        <ion-button *ngIf="false"> 
+          <ion-icon name="person-outline"></ion-icon>
+          Profile
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -18,23 +20,23 @@
 
   <ion-footer>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="courses" [routerLink]="['/courses']">
+      <ion-tab-button tab="courses" [routerLink]="['/courses']" routerLinkActive="active">
         <ion-icon name="book-outline"></ion-icon>
         All Courses
       </ion-tab-button>
-      <ion-tab-button tab="learning-paths" [routerLink]="['/learning-paths']">
+      <ion-tab-button tab="learning-paths" [routerLink]="['/learning-paths']" routerLinkActive="active">
         <ion-icon name="analytics-outline"></ion-icon>
         Learning Paths
       </ion-tab-button>
-      <ion-tab-button tab="bookmarks">
+      <ion-tab-button tab="bookmarks" *ngIf="false">
         <ion-icon name="bookmark-outline"></ion-icon>
         Bookmarks
       </ion-tab-button>
-      <ion-tab-button tab="in-progress">
+      <ion-tab-button tab="in-progress" *ngIf="false">
         <ion-icon name="refresh-outline"></ion-icon>
         In Progress
       </ion-tab-button>
-      <ion-tab-button tab="completed">
+      <ion-tab-button tab="completed" *ngIf="false">
         <ion-icon name="checkmark-done-outline"></ion-icon>
         Completed
       </ion-tab-button>
