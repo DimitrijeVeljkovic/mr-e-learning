@@ -6,15 +6,69 @@
           <ion-card-title class="ion-text-center">Create an account</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-input label="First Name" label-placement="floating" fill="outline" placeholder="Enter first name..." type="text" class="ion-margin-bottom"></ion-input>
-          <ion-input label="Last Name" label-placement="floating" fill="outline" placeholder="Enter last name..." type="text" class="ion-margin-bottom"></ion-input>
-          <ion-input label="Username" label-placement="floating" fill="outline" placeholder="Enter username..." type="text" class="ion-margin-bottom"></ion-input>
-          <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Enter email..." type="email" class="ion-margin-bottom"></ion-input>
-          <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Enter password..." type="password" class="ion-margin-bottom"></ion-input>
-          <div class="actions">
-            <ion-button>Sign Up</ion-button>
-            <span>Already have an account? <a [routerLink]="['/login']">Log in</a></span>
-          </div>
+          <form #signupForm="ngForm" (ngSubmit)="handleSignup(signupForm)">
+            <ion-input 
+              label="First Name"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter first name..."
+              type="text"
+              class="ion-margin-bottom"
+              name="firstName"
+              ngModel
+              required>
+            </ion-input>
+            <ion-input 
+              label="Last Name"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter last name..."
+              type="text"
+              class="ion-margin-bottom"
+              name="lastName"
+              ngModel
+              required>
+            </ion-input>
+            <ion-input 
+              label="Username"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter username..."
+              type="text"
+              class="ion-margin-bottom"
+              name="userName"
+              ngModel
+              required>
+            </ion-input>
+            <ion-input 
+              label="Email"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter email..."
+              type="email"
+              class="ion-margin-bottom"
+              name="email"
+              ngModel
+              required
+              email>
+            </ion-input>
+            <ion-input 
+              label="Password"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter password..."
+              type="password"
+              class="ion-margin-bottom"
+              name="password"
+              ngModel
+              required
+              minlength="8">
+            </ion-input>
+            <div class="actions">
+              <ion-button type="ngSubmit" [disabled]="!signupForm.valid">Sign Up</ion-button>
+              <span>Already have an account? <a [routerLink]="['/login']">Log in</a></span>
+            </div>
+          </form>
         </ion-card-content>
       </ion-card>
     </ion-col>

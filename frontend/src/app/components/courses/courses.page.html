@@ -16,7 +16,7 @@
               
                 <ion-card-content>
                   {{ course.description }}
-                  <div>
+                  <div *ngIf="userService.isAuthenticated()">
                     <ion-button fill="clear">Start</ion-button>
                     <ion-button fill="clear">Bookmark</ion-button>   
                   </div>

@@ -6,13 +6,37 @@
           <ion-card-title class="ion-text-center">Log in</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <ion-input label="Email" label-placement="floating" fill="outline" placeholder="Enter email..." type="email" class="ion-margin-bottom"></ion-input>
-          <ion-input label="Password" label-placement="floating" fill="outline" placeholder="Enter password..." type="password" class="ion-margin-bottom"></ion-input>
-          <div class="actions">
-            <ion-button>Log in</ion-button>
-            <span>Don't have an account? <a [routerLink]="['/signup']">Sign up</a></span>
-            <span>Forgot Password? <a>Reset</a></span>
-          </div>
+          <form #loginForm="ngForm" (ngSubmit)="handleLogin(loginForm)">
+            <ion-input 
+              label="Email"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Enter email..."
+              type="email"
+              class="ion-margin-bottom"
+              name="email"
+              ngModel
+              required
+              email>
+            </ion-input>
+            <ion-input 
+              label="Password"
+              label-placement="floating" 
+              fill="outline" 
+              placeholder="Enter password..." 
+              type="password" 
+              class="ion-margin-bottom"
+              name="password"
+              ngModel
+              required
+              minlength="8">
+            </ion-input>
+            <div class="actions">
+              <ion-button type="ngSubmit" [disabled]="!loginForm.valid">Log in</ion-button>
+              <span>Don't have an account? <a [routerLink]="['/signup']">Sign up</a></span>
+              <span>Forgot Password? <a>Reset</a></span>
+            </div>
+          </form>
         </ion-card-content>
       </ion-card>
     </ion-col>

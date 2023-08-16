@@ -3,12 +3,25 @@
   <ion-header>
     <ion-toolbar>
       <ion-title> MR E-Learning </ion-title>
-      <ion-buttons slot="primary">
-        <ion-button [routerLink]="['/login']" routerLinkActive="active"> Log in </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="secondary">
-        <ion-button [routerLink]="['/signup']" routerLinkActive="active"> Sign up </ion-button>
-      </ion-buttons>
+      <ng-container *ngIf="userService.isAuthenticated(); else notAuth">
+        <ion-buttons slot="primary">
+          <ion-button (click)="userService.clearAuthData()"> Log out </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button> 
+            <ion-icon slot="start" name="person-outline"></ion-icon>
+            Profile
+          </ion-button>
+        </ion-buttons>
+      </ng-container>
+      <ng-template #notAuth>
+        <ion-buttons slot="primary">
+          <ion-button [routerLink]="['/login']" routerLinkActive="active"> Log in </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="secondary">
+          <ion-button [routerLink]="['/signup']" routerLinkActive="active"> Sign up </ion-button>
+        </ion-buttons>
+      </ng-template>
     </ion-toolbar>
   </ion-header>
 
@@ -26,18 +39,20 @@
         <ion-icon name="analytics-outline"></ion-icon>
         Learning Paths
       </ion-tab-button>
-      <ion-tab-button tab="bookmarks" *ngIf="false">
-        <ion-icon name="bookmark-outline"></ion-icon>
-        Bookmarks
-      </ion-tab-button>
-      <ion-tab-button tab="in-progress" *ngIf="false">
-        <ion-icon name="refresh-outline"></ion-icon>
-        In Progress
-      </ion-tab-button>
-      <ion-tab-button tab="completed" *ngIf="false">
-        <ion-icon name="checkmark-done-outline"></ion-icon>
-        Completed
-      </ion-tab-button>
+      <ng-container *ngIf="userService.isAuthenticated()">
+        <ion-tab-button tab="bookmarks">
+          <ion-icon name="bookmark-outline"></ion-icon>
+          Bookmarks
+        </ion-tab-button>
+        <ion-tab-button tab="in-progress">
+          <ion-icon name="refresh-outline"></ion-icon>
+          In Progress
+        </ion-tab-button>
+        <ion-tab-button tab="completed">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+          Completed
+        </ion-tab-button>
+      </ng-container>
     </ion-tab-bar>
   </ion-footer>
 

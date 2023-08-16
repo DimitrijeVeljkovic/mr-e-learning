@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../interfaces/course';
 import { CourseService } from 'src/app/services/course.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-courses',
@@ -11,7 +12,8 @@ export class CoursesPage implements OnInit {
   public allCourses: Course[] = [];
   public filteredCourses: Course[] = [];
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private _courseService: CourseService,
+              public userService: UserService) { }
 
   ngOnInit() {
     this._courseService.getAllCourses().subscribe(res => {
