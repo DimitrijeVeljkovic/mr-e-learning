@@ -115,7 +115,7 @@ router.put('/send-code', (req, res, next) => {
                     }
 
                     res.status(200).json({
-                        message: 'Verification code added for user!'
+                        message: 'Verification code sent!'
                     });
                 })
                 .catch(error => {

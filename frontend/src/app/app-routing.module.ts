@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./components/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./components/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   }
 ];
 

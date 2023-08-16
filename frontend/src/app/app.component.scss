@@ -1,5 +1,11 @@
+@import "https://allfont.net/allfont.css?fonts=raleway-medium";
+
 :host {
     .active {
         color: var(--ion-color-primary);
+    }
+
+    ion-title {
+        font-family: 'Raleway Medium', arial;
     }
 }
