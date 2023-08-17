@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="primary">
+      <ion-button (click)="close()">Close</ion-button>
+    </ion-buttons>
+    <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div *ngFor="let comment of course?.comments" class="ion-padding-bottom">
+    <ion-chip>
+      <ion-avatar>
+        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
+      <ion-label>{{ comment.userName }}</ion-label>
+    </ion-chip>
+    <ion-item>
+      {{ comment.comment }}
+    </ion-item>
+  </div>
+</ion-content>
+<ion-footer>
+  <form #commentForm="ngForm" (ngSubmit)="postComment(commentForm)">
+    <ion-toolbar>
+        <ion-input 
+          label="Comment"
+          label-placement="floating"
+          fill="outline"
+          placeholder="Post your comment..."
+          type="text"
+          class="ion-margin"
+          name="comment"
+          required
+          ngModel>
+        </ion-input>
+        <ion-buttons slot="primary" class="ion-margin">
+          <ion-button type="ngSubmit" [disabled]="!commentForm.valid">
+            Post comment
+          </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+  </form>
+</ion-footer>

@@ -21,20 +21,23 @@ export class UserService {
     return this._http.post('http://localhost:3000/api/user/login', body) as Observable<{ token: string, user: User }>;
   }
 
-  public storeAuthData(token: string, userId: string) {
+  public storeAuthData(token: string, userId: string, userName: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
+    localStorage.setItem('userName', userName);
   }
 
   public clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
   }
 
-  public getAuthData(): { token: string | null, userId: string | null } {
+  public getAuthData(): { token: string | null, userId: string | null, userName: string | null } {
     return {
       token: localStorage.getItem('token'),
-      userId: localStorage.getItem('userId')
+      userId: localStorage.getItem('userId'),
+      userName: localStorage.getItem('userName')
     }
   }
 

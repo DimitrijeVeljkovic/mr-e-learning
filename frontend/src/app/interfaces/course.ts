@@ -1,3 +1,4 @@
+import { Comment } from "./comment";
 import { Question } from "./question";
 import { Rating } from "./rating";
 import { Section } from "./section";

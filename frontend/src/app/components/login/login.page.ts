@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
       .subscribe(
         res => {
           form.resetForm();
-          this._userService.storeAuthData(res.token, res.user._id || '');
+          this._userService.storeAuthData(res.token, res.user._id || '', res.user.userName || '');
           this._router.navigate(['/courses']);
         },
         err => {
