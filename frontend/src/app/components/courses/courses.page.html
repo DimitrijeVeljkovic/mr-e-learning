@@ -8,20 +8,8 @@
     </ion-row>
     <ion-row *ngIf="filteredCourses.length; else noCourses">
         <ion-col *ngFor="let course of filteredCourses" size="12" sizeLg="6">
-            <ion-card>
-                <img alt="Course image" src="{{ course.imageUrl }}" />
-                <ion-card-header>
-                  <ion-card-title>{{ course.title }}</ion-card-title>
-                </ion-card-header>
-              
-                <ion-card-content>
-                  {{ course.description }}
-                  <div *ngIf="userService.isAuthenticated()">
-                    <ion-button fill="clear">Start</ion-button>
-                    <ion-button fill="clear">Bookmark</ion-button>   
-                  </div>
-                </ion-card-content>
-            </ion-card>
+            <app-course-card [course]="course">
+            </app-course-card>
         </ion-col>
     </ion-row>
     <ng-template #noCourses>

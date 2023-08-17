@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CoursesPageRoutingModule } from './courses-routing.module';
+import { InProgressPageRoutingModule } from './in-progress-routing.module';
 
-import { CoursesPage } from './courses.page';
+import { InProgressPage } from './in-progress.page';
 import { CourseCardComponent } from '../course-card/course-card.component';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { CourseCardComponent } from '../course-card/course-card.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    CoursesPageRoutingModule,
+    InProgressPageRoutingModule,
     CourseCardComponent
   ],
-  declarations: [CoursesPage]
+  declarations: [InProgressPage]
 })
-export class CoursesPageModule {}
+export class InProgressPageModule {}

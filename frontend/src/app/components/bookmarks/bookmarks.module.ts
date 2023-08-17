@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CoursesPageRoutingModule } from './courses-routing.module';
+import { BookmarksPageRoutingModule } from './bookmarks-routing.module';
 
-import { CoursesPage } from './courses.page';
+import { BookmarksPage } from './bookmarks.page';
 import { CourseCardComponent } from '../course-card/course-card.component';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { CourseCardComponent } from '../course-card/course-card.component';
     CommonModule,
     FormsModule,
     IonicModule,
-    CoursesPageRoutingModule,
+    BookmarksPageRoutingModule,
     CourseCardComponent
   ],
-  declarations: [CoursesPage]
+  declarations: [BookmarksPage]
 })
-export class CoursesPageModule {}
+export class BookmarksPageModule {}

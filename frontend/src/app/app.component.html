@@ -40,15 +40,15 @@
         Learning Paths
       </ion-tab-button>
       <ng-container *ngIf="userService.isAuthenticated()">
-        <ion-tab-button tab="bookmarks">
+        <ion-tab-button tab="bookmarks" [routerLink]="['/bookmarks']" routerLinkActive="active">
           <ion-icon name="bookmark-outline"></ion-icon>
           Bookmarks
         </ion-tab-button>
-        <ion-tab-button tab="in-progress">
+        <ion-tab-button tab="in-progress" [routerLink]="['/in-progress']" routerLinkActive="active">
           <ion-icon name="refresh-outline"></ion-icon>
           In Progress
         </ion-tab-button>
-        <ion-tab-button tab="completed">
+        <ion-tab-button tab="completed" [routerLink]="['/completed']" routerLinkActive="active">
           <ion-icon name="checkmark-done-outline"></ion-icon>
           Completed
         </ion-tab-button>

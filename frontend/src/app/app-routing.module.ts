@@ -32,6 +32,18 @@ const routes: Routes = [
   {
     path: 'reset-password',
     loadChildren: () => import('./components/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'in-progress',
+    loadChildren: () => import('./components/in-progress/in-progress.module').then( m => m.InProgressPageModule)
+  },
+  {
+    path: 'bookmarks',
+    loadChildren: () => import('./components/bookmarks/bookmarks.module').then( m => m.BookmarksPageModule)
+  },
+  {
+    path: 'completed',
+    loadChildren: () => import('./components/completed/completed.module').then( m => m.CompletedPageModule)
   }
 ];
 

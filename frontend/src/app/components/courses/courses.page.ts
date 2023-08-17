@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../interfaces/course';
 import { CourseService } from 'src/app/services/course.service';
-import { UserService } from 'src/app/services/user.service';
+import { State } from 'src/app/enums/state';
 
 @Component({
   selector: 'app-courses',
@@ -11,9 +11,9 @@ import { UserService } from 'src/app/services/user.service';
 export class CoursesPage implements OnInit {
   public allCourses: Course[] = [];
   public filteredCourses: Course[] = [];
+  public state: State = State.ALL;
 
-  constructor(private _courseService: CourseService,
-              public userService: UserService) { }
+  constructor(private _courseService: CourseService) { }
 
   ngOnInit() {
     this._courseService.getAllCourses().subscribe(res => {
