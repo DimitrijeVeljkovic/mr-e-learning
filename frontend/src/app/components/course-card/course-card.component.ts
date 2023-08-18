@@ -6,6 +6,8 @@ import { Course } from 'src/app/interfaces/course';
 import { UserService } from 'src/app/services/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
 import { CourseService } from 'src/app/services/course.service';
+import { jsPDF } from 'jspdf';  
+import html2canvas from 'html2canvas';  
 
 @Component({
   selector: 'app-course-card',
@@ -17,6 +19,8 @@ import { CourseService } from 'src/app/services/course.service';
 export class CourseCardComponent  implements OnInit {
   @Input() course: Course;
   @Input() state: State = State.ALL;
+  @Input() dateFinished: string;
+  @Input() percentage: number;
 
   public stars = [
     { rating: 1, color: 'dark', name: 'star-outline' }, 
@@ -114,6 +118,16 @@ export class CourseCardComponent  implements OnInit {
           this.showToast(err.error.message);
         }
       )
+  }
+
+  public downloadCertificate() {
+    const doc = new jsPDF();
+    doc.text(`${this.course.title} - Certification`, 10, 20);
+    doc.text(`Issued by: MReLearning`, 10, 40);
+    doc.text(`Completed by: ${this.userService.getAuthData().userName}`, 10, 60);
+    doc.text(`Completed with score: ${this.percentage}%`, 10, 80);
+    doc.text(`Completed on date: ${this.dateFinished}`, 10, 100);
+    doc.save(`${this.course.title} - certification.pdf`);
   }
 
   public async showToast(message: string) {

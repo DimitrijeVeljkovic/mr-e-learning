@@ -2,7 +2,9 @@
   <ion-row *ngIf="completedCourses.length; else noCourses">
       <ion-col *ngFor="let course of completedCourses" size="12" sizeLg="6">
           <app-course-card [course]="course.course"
-                           [state]="state">
+                           [state]="state"
+                           [dateFinished]="course.dateFinished"
+                           [percentage]="course.percentage">
           </app-course-card>
       </ion-col>
   </ion-row>

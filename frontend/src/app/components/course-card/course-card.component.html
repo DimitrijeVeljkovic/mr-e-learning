@@ -15,6 +15,7 @@
 
   <ion-card-content>
     {{ course.description }}
+    <div id="certification">sadasd</div>
     <ion-grid>
       <ion-row>
         <ng-container *ngIf="userService.isAuthenticated()">
@@ -28,7 +29,7 @@
             <ion-button (click)="bookmarkCourse()"><ion-icon name="bookmark-outline" slot="start"></ion-icon>Bookmark</ion-button>
           </ion-col>
           <ion-col *ngIf="shouldShowCertificate" size="6" sizeMd="4">
-            <ion-button><ion-icon name="document-text-outline" slot="start"></ion-icon>Certificate</ion-button>
+            <ion-button (click)="downloadCertificate()"><ion-icon name="document-text-outline" slot="start"></ion-icon>Certificate</ion-button>
           </ion-col>
         </ng-container>
         <ion-col size="6" sizeMd="4">
