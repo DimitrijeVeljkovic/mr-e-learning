@@ -18,4 +18,8 @@ export class CourseService {
   public postComment(body: { userName: string, comment: string }, courseId: string): Observable<{ comments: Comment[] }> {
     return this._http.post(`http://localhost:3000/api/courses/${courseId}/add-comment`, body) as Observable<{ comments: Comment[] }>;
   }
+
+  public addRating(body: { userName: string, rating: number }, courseId: string): Observable<{ averageRating: number }> {
+    return this._http.post(`http://localhost:3000/api/courses/${courseId}/add-rating`, body) as Observable<{ averageRating: number }>;
+  }
 }

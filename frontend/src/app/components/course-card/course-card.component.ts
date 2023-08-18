@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
 import { UserService } from 'src/app/services/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
+import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-course-card',
@@ -17,7 +18,13 @@ export class CourseCardComponent  implements OnInit {
   @Input() course: Course;
   @Input() state: State = State.ALL;
 
-  public isModalOpen: boolean;
+  public stars = [
+    { rating: 1, color: 'dark', name: 'star-outline' }, 
+    { rating: 2, color: 'dark', name: 'star-outline' }, 
+    { rating: 3, color: 'dark', name: 'star-outline' }, 
+    { rating: 4, color: 'dark', name: 'star-outline' }, 
+    { rating: 5, color: 'dark', name: 'star-outline' }
+  ];
 
   get shouldShowBookmark(): boolean {
     return [State.ALL, State.IN_PROGRESS].includes(this.state);
@@ -43,6 +50,8 @@ export class CourseCardComponent  implements OnInit {
   }
 
   constructor(public userService: UserService,
+              private _courseService: CourseService,
+              private _toastController: ToastController,
               private _modalController: ModalController) { }
 
   ngOnInit() {}
@@ -55,4 +64,64 @@ export class CourseCardComponent  implements OnInit {
     return await modal.present();
   }
 
+  public rateCourse(rating: number) {
+    this.stars = this.stars.map(star => {
+      if (star.rating <= rating) {
+        return {
+          rating: star.rating,
+          color: 'warning',
+          name: 'star'
+        }
+      }
+
+      return {
+        rating: star.rating,
+        color: 'dark',
+        name: 'star-outline'
+      }
+    });
+
+    const newRating = { 
+      userName: this.userService.getAuthData().userName || '',
+      rating: rating 
+    };
+
+    this._courseService.addRating(newRating, this.course._id)
+      .subscribe(() => {
+        this.course.ratings.push({ ...newRating, _id: '' });
+      });
+  }
+
+  public startCourse() {
+    this.userService.startCourse({ courseId: this.course._id })
+      .subscribe(
+        res => {
+          this.showToast(res.message);
+        }, 
+        err => {
+          this.showToast(err.error.message);
+        }
+      )
+  }
+
+  public bookmarkCourse() {
+    this.userService.bookmarkCourse({ courseId: this.course._id })
+      .subscribe(
+        res => {
+          this.showToast(res.message);
+        }, 
+        err => {
+          this.showToast(err.error.message);
+        }
+      )
+  }
+
+  public async showToast(message: string) {
+    const toast = await this._toastController.create({
+      message,
+      duration: 5000
+    });
+
+    await toast.present();
+  }
 }

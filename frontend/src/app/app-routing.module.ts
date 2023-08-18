@@ -44,6 +44,10 @@ const routes: Routes = [
   {
     path: 'completed',
     loadChildren: () => import('./components/completed/completed.module').then( m => m.CompletedPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./components/profile/profile.module').then( m => m.ProfilePageModule)
   }
 ];
 

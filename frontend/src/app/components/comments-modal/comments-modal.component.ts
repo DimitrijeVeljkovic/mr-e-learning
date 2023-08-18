@@ -17,8 +17,8 @@ export class CommentsModalComponent  implements OnInit {
   @Input() public course: Course;
 
   constructor(private _modalController: ModalController,
-              private _userService: UserService,
-              private _courseService: CourseService) { }
+              private _courseService: CourseService,
+              public userService: UserService) { }
 
   ngOnInit() {}
 
@@ -28,7 +28,7 @@ export class CommentsModalComponent  implements OnInit {
 
   public postComment(form: NgForm) {
     this._courseService.postComment({
-      userName: this._userService.getAuthData().userName || '',
+      userName: this.userService.getAuthData().userName || '',
       comment: form.value.comment
     }, this.course._id)
       .subscribe(res => {

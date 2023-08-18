@@ -2,17 +2,39 @@
   <img alt="Course image" src="{{ course.imageUrl }}" />
   <ion-card-header>
     <ion-card-title>{{ course.title }}</ion-card-title>
-    <ion-card-subtitle color="warning">{{ courseRating }}</ion-card-subtitle>
+    <div class="rating">
+      <ion-card-subtitle color="warning">{{ courseRating }}</ion-card-subtitle>
+      <ion-card-subtitle class="rating__stars" *ngIf="userService.isAuthenticated()">
+        <ion-icon *ngFor="let star of stars"
+                  (click)="rateCourse(star.rating)"
+                  color="{{ star.color }}"
+                  name="{{ star.name }}"></ion-icon>
+      </ion-card-subtitle>
+    </div>
   </ion-card-header>
 
   <ion-card-content>
     {{ course.description }}
-    <div *ngIf="userService.isAuthenticated()" class="ion-padding-top ion-padding-bottom">
-      <ion-button *ngIf="shouldShowStart"><ion-icon name="play-outline" slot="start"></ion-icon>Start</ion-button>
-      <ion-button *ngIf="shouldShowContinue"><ion-icon name="play-forward-outline" slot="start"></ion-icon>Continue</ion-button>
-      <ion-button *ngIf="shouldShowBookmark"><ion-icon name="bookmark-outline" slot="start"></ion-icon>Bookmark</ion-button>
-      <ion-button *ngIf="shouldShowCertificate"><ion-icon name="document-text-outline" slot="start"></ion-icon>Certificate</ion-button>
-      <ion-button (click)="open()">Comments</ion-button>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ng-container *ngIf="userService.isAuthenticated()">
+          <ion-col *ngIf="shouldShowStart" size="6" sizeMd="4">
+            <ion-button (click)="startCourse()"><ion-icon name="play-outline" slot="start"></ion-icon>Start</ion-button>
+          </ion-col>
+          <ion-col *ngIf="shouldShowContinue" size="6" sizeMd="4">
+            <ion-button><ion-icon name="play-forward-outline" slot="start"></ion-icon>Continue</ion-button>
+          </ion-col>
+          <ion-col *ngIf="shouldShowBookmark" size="6" sizeMd="4">
+            <ion-button (click)="bookmarkCourse()"><ion-icon name="bookmark-outline" slot="start"></ion-icon>Bookmark</ion-button>
+          </ion-col>
+          <ion-col *ngIf="shouldShowCertificate" size="6" sizeMd="4">
+            <ion-button><ion-icon name="document-text-outline" slot="start"></ion-icon>Certificate</ion-button>
+          </ion-col>
+        </ng-container>
+        <ion-col size="6" sizeMd="4">
+          <ion-button (click)="open()" fill="outline"><ion-icon name="chatbox-ellipses-outline" slot="start"></ion-icon>Comments</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-card-content>
 </ion-card>

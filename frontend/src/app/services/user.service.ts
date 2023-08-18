@@ -64,4 +64,23 @@ export class UserService {
   public getCompletedCourses(): Observable<{ finishedCourses: CompletedCourse[] }> {
     return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}/finished-courses`) as Observable<{ finishedCourses: CompletedCourse[] }>;
   }
+
+  public startCourse(body: { courseId: string }): Observable<{ message: string }> {
+    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/start-course`, body) as Observable<{ message: string }>;
+  }
+
+  public bookmarkCourse(body: { courseId: string }): Observable<{ message: string }> {
+    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/bookmark-course`, body) as Observable<{ message: string }>;
+  }
+
+  public getUserData(): Observable<{ user: User }> {
+    return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}`) as Observable<{ user: User }>;
+  }
+
+  public updateUserData(body: User): Observable<{ message: string, user: User }> {
+    return this._http.put(`http://localhost:3000/api/user/${this.getAuthData().userId}/change`, body) as Observable<{ message: string, user: User }>;
+  }
+  public deleteUser(): Observable<{ message: string }> {
+    return this._http.delete(`http://localhost:3000/api/user/${this.getAuthData().userId}/delete`) as Observable<{ message: string }>;
+  }
 }

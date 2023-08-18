@@ -1,7 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="primary">
-      <ion-button (click)="close()">Close</ion-button>
+      <ion-button (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
     <ion-title>Comments</ion-title>
   </ion-toolbar>
@@ -19,7 +21,7 @@
     </ion-item>
   </div>
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="userService.isAuthenticated()">
   <form #commentForm="ngForm" (ngSubmit)="postComment(commentForm)">
     <ion-toolbar>
         <ion-input 
@@ -35,7 +37,7 @@
         </ion-input>
         <ion-buttons slot="primary" class="ion-margin">
           <ion-button type="ngSubmit" [disabled]="!commentForm.valid">
-            Post comment
+            <ion-icon name="send-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
     </ion-toolbar>

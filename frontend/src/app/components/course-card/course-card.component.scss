@@ -4,4 +4,24 @@
         max-height: 350px;
         object-fit: cover;
     }
+
+    ion-grid {
+        ion-row {
+            ion-col {
+                ion-button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .rating {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    
+        &__stars {
+            font-size: 20px;
+        }
+    }
 }

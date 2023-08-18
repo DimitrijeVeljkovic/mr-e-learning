@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { LearningPath } from 'src/app/interfaces/learning-path';
 import { LearningPathService } from 'src/app/services/learning-path.service';
 import { UserService } from 'src/app/services/user.service';
+import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
+import { Course } from 'src/app/interfaces/course';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-learning-paths',
@@ -13,6 +16,7 @@ export class LearningPathsPage implements OnInit {
   public filteredPaths: LearningPath[] = [];
 
   constructor(private _learningPathService: LearningPathService,
+              private _modalController: ModalController,
               public userService: UserService) { }
 
   ngOnInit() {
@@ -26,4 +30,11 @@ export class LearningPathsPage implements OnInit {
     this.filteredPaths = this.learningPaths.filter(path => path.title.toUpperCase().includes(event.detail.value.toUpperCase()));
   }
 
+  public async open(course: Course) {
+    const modal = await this._modalController.create({
+      component: CommentsModalComponent,
+      componentProps: { course: course }
+    });
+    return await modal.present();
+  }
 }

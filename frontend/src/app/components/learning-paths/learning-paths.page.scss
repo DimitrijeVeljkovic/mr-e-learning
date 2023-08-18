@@ -1,7 +1,7 @@
 :host {
     overflow-y: auto;
 
-    ion-grid {
+    .main-grid {
         width: 100vw;
     }
 
@@ -13,6 +13,16 @@
             top: 5px;
             left: 5px;
             width: 60px;
+        }
+    }
+
+    .buttons-grid {
+        ion-row {
+            ion-col {
+                ion-button {
+                    width: 100%;
+                }
+            }
         }
     }
 }

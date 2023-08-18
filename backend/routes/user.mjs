@@ -8,6 +8,23 @@ import nodemailer from 'nodemailer';
 
 const router = express.Router();
 
+// Get user with id
+router.get('/:userId', tokenCheckMiddleware, (req, res, next) => {
+    User.findById(req.params.userId)
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: 'User not found!'
+                });
+            }
+
+            res.status(200).json({ user });
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        })
+})
+
 // User signup
 router.post('/signup', (req, res, next) => {
     bcrypt.hash(req.body.password, 10).then(passwordHash => {
@@ -209,7 +226,7 @@ router.post('/:userId/bookmark-course', tokenCheckMiddleware, (req, res, next) =
             }
             if (user.bookmarkedCourses.includes(courseId)) {
                 return res.status(400).json({
-                    message: 'Course already bookmarked!'
+                    message: 'Cannot bookmark course! Course already bookmarked!'
                 });
             }
 
@@ -241,8 +258,13 @@ router.post('/:userId/start-course', tokenCheckMiddleware, (req, res, next) => {
             }
             if (user.inProgressCourses.find(course => course.courseId === courseId)) {
                 return res.status(400).json({
-                    message: 'Course already in progress!'
+                    message: 'Cannot start course! Course already in progress!'
                 });
+            }
+            if (user.finishedCourses.find(course => course.courseId === courseId)) {
+                return res.status(400).json({
+                    message: 'Cannot start course! Course already completed!'
+                })
             }
 
             user.inProgressCourses.push({
