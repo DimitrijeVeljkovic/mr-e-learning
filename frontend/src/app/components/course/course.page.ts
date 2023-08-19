@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { combineLatest, forkJoin, of, switchMap } from 'rxjs';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CourseService } from 'src/app/services/course.service';
@@ -19,6 +20,8 @@ export class CoursePage implements OnInit {
   constructor(private _route: ActivatedRoute,
               private _userService: UserService,
               private _courseService: CourseService,
+              private _toastController: ToastController,
+              private _router: Router,
               public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
@@ -30,6 +33,7 @@ export class CoursePage implements OnInit {
       const inProgressCourses = inProgress.inProgressCourses;
       
       this.course = inProgressCourses.find(c => c.course._id === courseId)!;
+      console.log(this.course.course.finalTest);
     });
   }
 
@@ -56,5 +60,32 @@ export class CoursePage implements OnInit {
         }
         form.resetForm();
       })
+  }
+
+  public handleSubmitTest(form: NgForm) {
+    const test = form.value;
+    const body = Object.keys(test).map(key => test[key]) as { question: string; answer: string; }[];
+    
+    this._userService.submitTest(this.course?.course._id || '', body)
+      .subscribe(
+        res => {
+          this.showToast(`${res.message} Percentage: ${res.finishedCourse.percentage}%`, 'success');
+          this._router.navigate(['/completed']);
+        },
+        err => {
+          this.showToast(`${err.error.message} Percentage: ${err.error.percentCorrect}%`, 'danger');
+          form.resetForm();
+        }
+      );
+  }
+
+  public async showToast(message: string, color: string) {
+    const toast = await this._toastController.create({
+      message,
+      duration: 5000,
+      color
+    });
+
+    await toast.present();
   }
 }

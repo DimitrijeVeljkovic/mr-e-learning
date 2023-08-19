@@ -22,14 +22,14 @@
               <small>Notes</small>
             </ion-label>
           </ion-segment-button>
-          <ion-segment-button value="test">
-            <ion-label>
-              <small>Test</small>
-            </ion-label>
-          </ion-segment-button>
           <ion-segment-button value="comments">
             <ion-label>
               <small>Comments</small>
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="test">
+            <ion-label>
+              <small>Test</small>
             </ion-label>
           </ion-segment-button>
         </ion-segment>
@@ -53,7 +53,7 @@
         <div *ngSwitchCase="'notes'">
           <ion-card>
             <ion-card-header>
-              <form #noteForm="ngForm" (ngSubmit)="addNote(noteForm)">
+              <form #noteForm="ngForm" class="text-form" (ngSubmit)="addNote(noteForm)">
                 <ion-input 
                     label="New note"
                     label-placement="floating"
@@ -86,11 +86,32 @@
             </ion-card-content>
           </ion-card>
         </div>
-        <div *ngSwitchCase="'test'">
-          TEST
+        <div *ngSwitchCase="'test'" class="ion-padding">
+          <form #finalTestForm="ngForm" (ngSubmit)="handleSubmitTest(finalTestForm)">
+            <ion-list>
+              <div *ngFor="let question of course?.course?.finalTest; let i = index">
+                <ion-item-divider>
+                  <ion-label>
+                    {{ question.question }}
+                  </ion-label>
+                </ion-item-divider>
+                <ion-radio-group name="question{{ i + 1 }}"
+                                 required
+                                 ngModel>
+                  <ion-item *ngFor="let option of question.options">
+                    <ion-radio [value]="{ question: question.question, answer: option }">{{ option }}</ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+              </div>
+            </ion-list>
+            <ion-button type="ngSubmit" [disabled]="!finalTestForm.valid" class="submit-test-button">
+              <ion-icon name="checkmark-done-outline" slot="start"></ion-icon>
+              Submit test
+            </ion-button>
+          </form>
         </div>
         <div *ngSwitchCase="'comments'" class="ion-padding">
-          <form #commentForm="ngForm" class="ion-margin-bottom" (ngSubmit)="postComment(commentForm)">
+          <form #commentForm="ngForm" class="ion-margin-bottom text-form" (ngSubmit)="postComment(commentForm)">
             <ion-input 
               label="Comment"
               label-placement="floating"

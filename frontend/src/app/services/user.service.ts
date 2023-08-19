@@ -88,4 +88,8 @@ export class UserService {
   public addNote(courseId: string, body: { newNote: string }): Observable<{ message: string, note: string }> {
     return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/add-note/${courseId}`, body) as Observable<{ message: string, note: string }>;
   }
+
+  public submitTest(courseId: string, body: { question: string, answer: string }[]): Observable<{ message: string, finishedCourse: CompletedCourse }> {
+    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/submit-test/${courseId}`, body) as Observable<{ message: string, finishedCourse: CompletedCourse }>;
+  }
 }

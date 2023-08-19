@@ -15,7 +15,7 @@
         height: 250px;
     }
 
-    form {
+    form.text-form {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -23,5 +23,23 @@
 
     .note-card {
         margin: 0;
+    }
+
+    ion-list {
+        padding: 0;
+
+        ion-item-divider {
+            ion-label {
+                text-overflow: unset;
+                white-space: unset;
+            }
+        }
+    }
+
+    .submit-test-button {
+        display: block;
+        margin: auto;
+        width: 200px;
+        margin-top: 16px;
     }
 }
