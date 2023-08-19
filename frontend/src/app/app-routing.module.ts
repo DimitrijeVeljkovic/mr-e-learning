@@ -5,21 +5,11 @@ const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
   { 
     path: 'courses', 
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./components/courses/courses.module').then(m => m.CoursesPageModule)
-      }
-    ]
+    loadChildren: () => import('./components/courses/courses.module').then(m => m.CoursesPageModule)
   },
   {
     path: 'learning-paths',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./components/learning-paths/learning-paths.module').then( m => m.LearningPathsPageModule)
-      }
-    ]
+    loadChildren: () => import('./components/learning-paths/learning-paths.module').then( m => m.LearningPathsPageModule)
   },
   {
     path: 'signup',
@@ -35,7 +25,16 @@ const routes: Routes = [
   },
   {
     path: 'in-progress',
-    loadChildren: () => import('./components/in-progress/in-progress.module').then( m => m.InProgressPageModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./components/in-progress/in-progress.module').then( m => m.InProgressPageModule)
+      },
+      {
+        path: ':courseId',
+        loadChildren: () => import('./components/course/course.module').then( m => m.CoursePageModule)
+      }
+    ]
   },
   {
     path: 'bookmarks',

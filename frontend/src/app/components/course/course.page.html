@@ -1,0 +1,126 @@
+<ion-grid class="main-grid">
+  <ion-row>
+    <ion-col size="12" sizeMd="4">
+      <img src="{{ course?.course?.imageUrl }}" alt="">
+      <div class="ion-padding">
+        <h1 class="ion-text-center">{{ course?.course?.title }}</h1>
+        <p class="ion-text-justify">
+          {{ course?.course?.description }}
+        </p>
+      </div>
+    </ion-col>
+    <ion-col size="12" sizeMd="8">
+      <div>
+        <ion-segment id="segment" (ionChange)="handleSegmentChange($event)" value="content">
+          <ion-segment-button value="content">
+            <ion-label>
+              <small>Content</small>
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="notes">
+            <ion-label>
+              <small>Notes</small>
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="test">
+            <ion-label>
+              <small>Test</small>
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="comments">
+            <ion-label>
+              <small>Comments</small>
+            </ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <div [ngSwitch]="selectedSegment">
+        <div *ngSwitchCase="'content'">
+          <ion-card *ngFor="let section of course?.course?.sections">
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">{{ section.title }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <div *ngFor="let paragraph of section.paragraphs" class="ion-text-justify ion-margin-bottom">
+                {{ paragraph }}
+              </div>
+              <div *ngIf="section.videoUrl">
+                <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(section.videoUrl)" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div *ngSwitchCase="'notes'">
+          <ion-card>
+            <ion-card-header>
+              <form #noteForm="ngForm" (ngSubmit)="addNote(noteForm)">
+                <ion-input 
+                    label="New note"
+                    label-placement="floating"
+                    fill="outline"
+                    placeholder="Enter new note..."
+                    type="text"
+                    name="newNote"
+                    ngModel
+                    required>
+                </ion-input>
+                <ion-buttons>
+                  <ion-button type="ngSubmit" [disabled]="!noteForm.valid">
+                    <ion-icon name="add"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </form>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col *ngFor="let note of course?.notes" size="6">
+                    <ion-card color="primary" class="note-card">
+                      <ion-card-content>
+                        {{ note }}
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+        <div *ngSwitchCase="'test'">
+          TEST
+        </div>
+        <div *ngSwitchCase="'comments'" class="ion-padding">
+          <form #commentForm="ngForm" class="ion-margin-bottom" (ngSubmit)="postComment(commentForm)">
+            <ion-input 
+              label="Comment"
+              label-placement="floating"
+              fill="outline"
+              placeholder="Post your comment..."
+              type="text"
+              name="comment"
+              required
+              ngModel>
+            </ion-input>
+            <ion-buttons>
+              <ion-button type="ngSubmit" [disabled]="!commentForm.valid">
+                <ion-icon name="send-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </form>
+          <div *ngFor="let comment of course?.course?.comments" class="ion-padding-bottom">
+            <ion-chip>
+              <ion-avatar>
+                <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+              </ion-avatar>
+              <ion-label>{{ comment.userName }}</ion-label>
+            </ion-chip>
+            <ion-item>
+              {{ comment.comment }}
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

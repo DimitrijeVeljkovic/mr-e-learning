@@ -1,0 +1,27 @@
+:host {
+    overflow-y: auto;
+    justify-content: flex-start;
+
+    .main-grid {
+        width: 100vw;
+    }
+
+    h1 {
+        margin-top: 10px;
+    }
+
+    iframe {
+        width: 100%;
+        height: 250px;
+    }
+
+    form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .note-card {
+        margin: 0;
+    }
+}

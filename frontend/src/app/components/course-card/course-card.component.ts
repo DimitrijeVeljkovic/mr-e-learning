@@ -6,15 +6,15 @@ import { Course } from 'src/app/interfaces/course';
 import { UserService } from 'src/app/services/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
 import { CourseService } from 'src/app/services/course.service';
-import { jsPDF } from 'jspdf';  
-import html2canvas from 'html2canvas';  
+import { jsPDF } from 'jspdf';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-course-card',
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.scss'],
   standalone: true,
-  imports: [ IonicModule, CommonModule ]
+  imports: [ IonicModule, CommonModule, RouterModule ]
 })
 export class CourseCardComponent  implements OnInit {
   @Input() course: Course;

@@ -80,7 +80,12 @@ export class UserService {
   public updateUserData(body: User): Observable<{ message: string, user: User }> {
     return this._http.put(`http://localhost:3000/api/user/${this.getAuthData().userId}/change`, body) as Observable<{ message: string, user: User }>;
   }
+
   public deleteUser(): Observable<{ message: string }> {
     return this._http.delete(`http://localhost:3000/api/user/${this.getAuthData().userId}/delete`) as Observable<{ message: string }>;
+  }
+
+  public addNote(courseId: string, body: { newNote: string }): Observable<{ message: string, note: string }> {
+    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/add-note/${courseId}`, body) as Observable<{ message: string, note: string }>;
   }
 }
