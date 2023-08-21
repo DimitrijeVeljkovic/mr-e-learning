@@ -1,9 +1,7 @@
+@import '../../mixins/mixins.scss';
+
 :host {
-    background: url(../../wave1.svg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow-y: auto;
+    @include background-image-wave;
 
     ion-grid {
         width: 100vw;
