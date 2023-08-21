@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController, ViewDidEnter } from '@ionic/angular';
+import { ViewDidEnter } from '@ionic/angular';
 import { combineLatest } from 'rxjs';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CourseService } from 'src/app/services/course.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class CoursePage implements ViewDidEnter {
   constructor(private _route: ActivatedRoute,
               private _userService: UserService,
               private _courseService: CourseService,
-              private _toastController: ToastController,
+              private _toastService: ToastService,
               private _router: Router,
               public sanitizer: DomSanitizer) { }
 
@@ -68,23 +69,13 @@ export class CoursePage implements ViewDidEnter {
     this._userService.submitTest(this.course?.course._id || '', body)
       .subscribe(
         res => {
-          this.showToast(`${res.message} Percentage: ${res.finishedCourse.percentage}%`, 'success');
+          this._toastService.showToast(`${res.message} Percentage: ${res.finishedCourse.percentage}%`, 'success');
           this._router.navigate(['/completed']);
         },
         err => {
-          this.showToast(`${err.error.message} Percentage: ${err.error.percentCorrect}%`, 'danger');
+          this._toastService.showToast(`${err.error.message} Percentage: ${err.error.percentCorrect}%`, 'danger');
           form.resetForm();
         }
       );
-  }
-
-  public async showToast(message: string, color: string) {
-    const toast = await this._toastController.create({
-      message,
-      duration: 5000,
-      color
-    });
-
-    await toast.present();
   }
 }

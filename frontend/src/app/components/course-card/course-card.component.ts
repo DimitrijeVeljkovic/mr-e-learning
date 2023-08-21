@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { IonicModule, ModalController, ToastController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
 import { UserService } from 'src/app/services/user.service';
@@ -8,6 +8,7 @@ import { CommentsModalComponent } from '../comments-modal/comments-modal.compone
 import { CourseService } from 'src/app/services/course.service';
 import { jsPDF } from 'jspdf';
 import { RouterModule } from '@angular/router';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-course-card',
@@ -53,10 +54,10 @@ export class CourseCardComponent {
     return numberOfRatings && sum ? `Rated with ${(sum/numberOfRatings).toFixed(2)} out of 5` : 'Rating not available'
   }
 
-  constructor(public userService: UserService,
-              private _courseService: CourseService,
-              private _toastController: ToastController,
-              private _modalController: ModalController) { }
+  constructor(private _courseService: CourseService,
+              private _toastService: ToastService,
+              private _modalController: ModalController,
+              public userService: UserService) { }
 
   public async open() {
     const modal = await this._modalController.create({
@@ -98,10 +99,10 @@ export class CourseCardComponent {
     this.userService.startCourse({ courseId: this.course._id })
       .subscribe(
         res => {
-          this.showToast(res.message);
+          this._toastService.showToast(res.message);
         }, 
         err => {
-          this.showToast(err.error.message);
+          this._toastService.showToast(err.error.message);
         }
       )
   }
@@ -110,10 +111,10 @@ export class CourseCardComponent {
     this.userService.bookmarkCourse({ courseId: this.course._id })
       .subscribe(
         res => {
-          this.showToast(res.message);
+          this._toastService.showToast(res.message);
         }, 
         err => {
-          this.showToast(err.error.message);
+          this._toastService.showToast(err.error.message);
         }
       )
   }
@@ -126,14 +127,5 @@ export class CourseCardComponent {
     doc.text(`Completed with score: ${this.percentage}%`, 10, 80);
     doc.text(`Completed on date: ${this.dateFinished}`, 10, 100);
     doc.save(`${this.course.title} - certification.pdf`);
-  }
-
-  public async showToast(message: string) {
-    const toast = await this._toastController.create({
-      message,
-      duration: 5000
-    });
-
-    await toast.present();
   }
 }

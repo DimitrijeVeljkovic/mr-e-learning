@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,21 +11,12 @@ import { UserService } from 'src/app/services/user.service';
 export class SignupPage {
 
   constructor(private _userService: UserService,
-              private _toastController: ToastController) { }
+              private _toastService: ToastService) { }
 
   public handleSignup(form: NgForm) {
     this._userService.signup({ ...form.value }).subscribe(res => {
       form.resetForm();
-      this.showToast(res.message);
+      this._toastService.showToast(res.message);
     });
-  }
-
-  public async showToast(message: string) {
-    const toast = await this._toastController.create({
-      message,
-      duration: 5000
-    });
-
-    await toast.present();
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginPage {
 
   constructor(private _userService: UserService,
               private _router: Router,
-              private _toastController: ToastController) { }
+              private _toastService: ToastService) { }
 
   public handleLogin(form: NgForm) {
     this._userService.login({ ...form.value })
@@ -24,17 +24,8 @@ export class LoginPage {
           this._router.navigate(['/courses']);
         },
         err => {
-          this.showToast(err.error.message);
+          this._toastService.showToast(err.error.message);
         }
       );
-  }
-
-  public async showToast(message: string) {
-    const toast = await this._toastController.create({
-      message,
-      duration: 5000
-    });
-
-    await toast.present();
   }
 }

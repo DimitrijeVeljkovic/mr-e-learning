@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController, ViewDidEnter } from '@ionic/angular';
+import { ViewDidEnter } from '@ionic/angular';
 import { User } from 'src/app/interfaces/user';
+import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class ProfilePage implements ViewDidEnter {
   ];
 
   constructor(private _userService: UserService,
-              private _toastController: ToastController,
+              private _toastService: ToastService,
               private _router: Router) { }
 
   ionViewDidEnter() {
@@ -40,7 +41,7 @@ export class ProfilePage implements ViewDidEnter {
     this._userService.updateUserData(form.value)
       .subscribe(res => {
         this._userService.changeUserName(res.user.userName || '');
-        this.showToast(res.message);
+        this._toastService.showToast(res.message);
       });
   }
 
@@ -49,16 +50,7 @@ export class ProfilePage implements ViewDidEnter {
       .subscribe(res => {
         this._userService.clearAuthData();
         this._router.navigate(['/login']);
-        this.showToast(res.message);
+        this._toastService.showToast(res.message);
       });
-  }
-
-  public async showToast(message: string) {
-    const toast = await this._toastController.create({
-      message,
-      duration: 5000
-    });
-
-    await toast.present();
   }
 }
