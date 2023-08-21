@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./completed.page.scss'],
 })
 export class CompletedPage implements ViewDidEnter {
-  public completedCourses: CompletedCourse[] = [];
+  public completedCourses: CompletedCourse[];
   public state: State = State.COMPLETED;
 
   constructor(private _userService: UserService) { }

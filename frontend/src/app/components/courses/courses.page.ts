@@ -11,7 +11,7 @@ import { ViewDidEnter } from '@ionic/angular';
 })
 export class CoursesPage implements ViewDidEnter {
   public allCourses: Course[] = [];
-  public filteredCourses: Course[] = [];
+  public filteredCourses: Course[];
   public state: State = State.ALL;
 
   constructor(private _courseService: CourseService) { }

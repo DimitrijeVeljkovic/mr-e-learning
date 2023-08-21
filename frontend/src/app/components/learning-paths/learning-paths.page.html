@@ -7,43 +7,45 @@
     </ion-col>
   </ion-row>
 
-  <ion-row *ngIf="filteredPaths.length; else noLearningPaths">
-    <ion-col *ngFor="let learningPath of filteredPaths" size="12" sizeLg="6" offsetLg="3">
-      <ion-card class="learning-path-card">
-        <img src="{{ learningPath.imageUrl }}" alt="logo" class="logo">
-        <ion-card-header>
-          <ion-card-title class="ion-text-center">{{ learningPath.title }}</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-accordion-group expand="inset">
-            <ion-accordion *ngFor="let course of learningPath.courses" [value]="course.title">
-              <ion-item slot="header" color="light">
-                <ion-label>{{ course.title }}</ion-label>
-              </ion-item>
-              <div class="ion-padding" slot="content">
-                {{ course.description }}
-                <ion-grid class="buttons-grid">
-                  <ion-row>
-                    <ng-container *ngIf="userService.isAuthenticated()">
+  <ng-container *ngIf="filteredPaths">
+    <ion-row *ngIf="filteredPaths.length; else noLearningPaths">
+      <ion-col *ngFor="let learningPath of filteredPaths" size="12" sizeLg="6" offsetLg="3">
+        <ion-card class="learning-path-card">
+          <img src="{{ learningPath.imageUrl }}" alt="logo" class="logo">
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">{{ learningPath.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-accordion-group expand="inset">
+              <ion-accordion *ngFor="let course of learningPath.courses" [value]="course.title">
+                <ion-item slot="header" color="light">
+                  <ion-label>{{ course.title }}</ion-label>
+                </ion-item>
+                <div class="ion-padding" slot="content">
+                  {{ course.description }}
+                  <ion-grid class="buttons-grid">
+                    <ion-row>
+                      <ng-container *ngIf="userService.isAuthenticated()">
+                        <ion-col size="12" sizeMd="4">
+                          <ion-button><ion-icon name="play-outline" slot="start"></ion-icon>Start</ion-button>
+                        </ion-col>
+                        <ion-col size="12" sizeMd="4">
+                          <ion-button><ion-icon name="bookmark-outline" slot="start"></ion-icon>Bookmark</ion-button>  
+                        </ion-col>
+                      </ng-container>
                       <ion-col size="12" sizeMd="4">
-                        <ion-button><ion-icon name="play-outline" slot="start"></ion-icon>Start</ion-button>
+                        <ion-button (click)="open(course)" fill="outline"><ion-icon name="chatbox-ellipses-outline" slot="start"></ion-icon>Comments</ion-button>
                       </ion-col>
-                      <ion-col size="12" sizeMd="4">
-                        <ion-button><ion-icon name="bookmark-outline" slot="start"></ion-icon>Bookmark</ion-button>  
-                      </ion-col>
-                    </ng-container>
-                    <ion-col size="12" sizeMd="4">
-                      <ion-button (click)="open(course)" fill="outline"><ion-icon name="chatbox-ellipses-outline" slot="start"></ion-icon>Comments</ion-button>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-              </div>
-            </ion-accordion>
-          </ion-accordion-group>  
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+                    </ion-row>
+                  </ion-grid>
+                </div>
+              </ion-accordion>
+            </ion-accordion-group>  
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ng-container>
 
   <ng-template #noLearningPaths>
     <ion-row>

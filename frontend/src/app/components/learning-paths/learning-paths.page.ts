@@ -13,7 +13,7 @@ import { ModalController, ViewDidEnter } from '@ionic/angular';
 })
 export class LearningPathsPage implements ViewDidEnter {
   public learningPaths: LearningPath[] = [];
-  public filteredPaths: LearningPath[] = [];
+  public filteredPaths: LearningPath[];
 
   constructor(private _learningPathService: LearningPathService,
               private _modalController: ModalController,

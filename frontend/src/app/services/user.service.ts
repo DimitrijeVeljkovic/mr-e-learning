@@ -41,6 +41,10 @@ export class UserService {
     }
   }
 
+  public changeUserName(userName: string) {
+    localStorage.setItem('userName', userName);
+  }
+
   public isAuthenticated(): boolean {
     return this.getAuthData().token !== null;
   }

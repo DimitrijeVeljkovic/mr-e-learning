@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./in-progress.page.scss'],
 })
 export class InProgressPage implements ViewDidEnter {
-  public inProgressCourses: InProgressCourse[] = [];
+  public inProgressCourses: InProgressCourse[];
   public state: State = State.IN_PROGRESS;
 
   constructor(private _userService: UserService) { }

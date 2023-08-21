@@ -6,12 +6,14 @@
             </ion-item>
         </ion-col>
     </ion-row>
-    <ion-row *ngIf="filteredCourses.length; else noCourses">
-        <ion-col *ngFor="let course of filteredCourses" size="12" sizeLg="6">
-            <app-course-card [course]="course">
-            </app-course-card>
-        </ion-col>
-    </ion-row>
+    <ng-container *ngIf="filteredCourses">
+        <ion-row *ngIf="filteredCourses.length; else noCourses">
+            <ion-col *ngFor="let course of filteredCourses" size="12" sizeLg="6">
+                <app-course-card [course]="course">
+                </app-course-card>
+            </ion-col>
+        </ion-row>
+    </ng-container>
     <ng-template #noCourses>
         <ion-row>
             <ion-col size="12" sizeLg="6" offsetLg="3">

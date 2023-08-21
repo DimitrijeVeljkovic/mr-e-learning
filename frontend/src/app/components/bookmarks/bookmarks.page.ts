@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./bookmarks.page.scss'],
 })
 export class BookmarksPage implements ViewDidEnter {
-  public bookmarkedCourses: Course[] = [];
+  public bookmarkedCourses: Course[];
   public state: State = State.BOOKMARKED;
 
   constructor(private _userService: UserService) { }
