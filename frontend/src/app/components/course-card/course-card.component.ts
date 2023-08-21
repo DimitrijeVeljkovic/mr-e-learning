@@ -105,7 +105,7 @@ export class CourseCardComponent {
         err => {
           this._toastService.showToast(err.error.message);
         }
-      )
+      );
   }
 
   public bookmarkCourse() {
@@ -118,7 +118,7 @@ export class CourseCardComponent {
         err => {
           this._toastService.showToast(err.error.message);
         }
-      )
+      );
   }
 
   public downloadCertificate() {
