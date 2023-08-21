@@ -99,6 +99,7 @@ export class CourseCardComponent {
     this.userService.startCourse({ courseId: this.course._id })
       .subscribe(
         res => {
+          this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
           this._toastService.showToast(res.message);
         }, 
         err => {
@@ -111,6 +112,7 @@ export class CourseCardComponent {
     this.userService.bookmarkCourse({ courseId: this.course._id })
       .subscribe(
         res => {
+          this._courseService.bookmarkCounter$.next(this._courseService.bookmarkCounter$.getValue() + 1);
           this._toastService.showToast(res.message);
         }, 
         err => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '../interfaces/course';
 import { Comment } from '../interfaces/comment';
 
@@ -8,6 +8,11 @@ import { Comment } from '../interfaces/comment';
   providedIn: 'root'
 })
 export class CourseService {
+  public courseCounter$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public learningPathCounter$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public inProgressCounter$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public bookmarkCounter$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public completedCounter$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   constructor(private _http: HttpClient) { }
 
@@ -21,5 +26,22 @@ export class CourseService {
 
   public addRating(body: { userName: string, rating: number }, courseId: string): Observable<{ averageRating: number }> {
     return this._http.post(`http://localhost:3000/api/courses/${courseId}/add-rating`, body) as Observable<{ averageRating: number }>;
+  }
+
+  public getCounts(userId: string | null): Observable<{
+    courseCount: number,
+    learningPathCount: number,
+    inProgressCount: number,
+    bookmarkCount: number,
+    completeCount: number
+  }> {
+    const queryParams = userId ? `?userId=${userId}` : '';
+    return this._http.get(`http://localhost:3000/api/courses/count${queryParams}`) as Observable<{
+      courseCount: number,
+      learningPathCount: number,
+      inProgressCount: number,
+      bookmarkCount: number,
+      completeCount: number
+    }>;
   }
 }

@@ -33,23 +33,28 @@
     <ion-tab-bar slot="bottom">
       <ion-tab-button tab="courses" [routerLink]="['/courses']" routerLinkActive="active">
         <ion-icon name="book-outline"></ion-icon>
+        <ion-badge *ngIf="(courseService.courseCounter$ | async) as courseCounter" color="warning">{{ courseCounter }}</ion-badge>
         All Courses
       </ion-tab-button>
       <ion-tab-button tab="learning-paths" [routerLink]="['/learning-paths']" routerLinkActive="active">
         <ion-icon name="analytics-outline"></ion-icon>
+        <ion-badge *ngIf="(courseService.learningPathCounter$ | async) as learningPathCounter" color="warning">{{ learningPathCounter }}</ion-badge>
         Learning Paths
       </ion-tab-button>
       <ng-container *ngIf="userService.isAuthenticated()">
         <ion-tab-button tab="bookmarks" [routerLink]="['/bookmarks']" routerLinkActive="active">
           <ion-icon name="bookmark-outline"></ion-icon>
+          <ion-badge *ngIf="(courseService.bookmarkCounter$ | async) as bookmarkCounter" color="warning">{{ bookmarkCounter }}</ion-badge>
           Bookmarks
         </ion-tab-button>
         <ion-tab-button tab="in-progress" [routerLink]="['/in-progress']" routerLinkActive="active">
           <ion-icon name="refresh-outline"></ion-icon>
+          <ion-badge *ngIf="(courseService.inProgressCounter$ | async) as inProgressCounter" color="warning" aria-setsize="20px">{{ inProgressCounter }}</ion-badge>
           In Progress
         </ion-tab-button>
         <ion-tab-button tab="completed" [routerLink]="['/completed']" routerLinkActive="active">
           <ion-icon name="checkmark-done-outline"></ion-icon>
+          <ion-badge *ngIf="(courseService.completedCounter$ | async) as completedCounter" color="warning">{{ completedCounter }}</ion-badge>
           Completed
         </ion-tab-button>
       </ng-container>

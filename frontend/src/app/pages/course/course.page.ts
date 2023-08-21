@@ -69,6 +69,8 @@ export class CoursePage implements ViewDidEnter {
     this._userService.submitTest(this.course?.course._id || '', body)
       .subscribe(
         res => {
+          this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() - 1);
+          this._courseService.completedCounter$.next(this._courseService.completedCounter$.getValue() + 1);
           this._toastService.showToast(`${res.message} Percentage: ${res.finishedCourse.percentage}%`, 'success');
           this._router.navigate(['/completed']);
         },

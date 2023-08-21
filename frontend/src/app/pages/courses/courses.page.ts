@@ -3,6 +3,7 @@ import { Course } from '../../interfaces/course';
 import { CourseService } from 'src/app/services/course.service';
 import { State } from 'src/app/enums/state';
 import { ViewDidEnter } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-courses',
