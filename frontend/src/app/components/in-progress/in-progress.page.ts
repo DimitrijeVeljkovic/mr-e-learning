@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ViewDidEnter } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { UserService } from 'src/app/services/user.service';
@@ -8,13 +9,13 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './in-progress.page.html',
   styleUrls: ['./in-progress.page.scss'],
 })
-export class InProgressPage implements OnInit {
+export class InProgressPage implements ViewDidEnter {
   public inProgressCourses: InProgressCourse[] = [];
   public state: State = State.IN_PROGRESS;
 
   constructor(private _userService: UserService) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this._userService.getInProgressCourses().subscribe(res => {
       this.inProgressCourses = res.inProgressCourses;
     });

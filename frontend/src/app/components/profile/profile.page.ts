@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, ViewDidEnter } from '@ionic/angular';
 import { User } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements ViewDidEnter {
   public user: User = { firstName: '', lastName: '', userName: '', email: '', password: '' };
   public deleteAccountAlertButtons = [
     {
@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
               private _toastController: ToastController,
               private _router: Router) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this._userService.getUserData().subscribe(res => {
       this.user = res.user;
     });

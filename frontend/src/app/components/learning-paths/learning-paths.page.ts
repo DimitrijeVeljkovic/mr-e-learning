@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LearningPath } from 'src/app/interfaces/learning-path';
 import { LearningPathService } from 'src/app/services/learning-path.service';
 import { UserService } from 'src/app/services/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
 import { Course } from 'src/app/interfaces/course';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ViewDidEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-learning-paths',
   templateUrl: './learning-paths.page.html',
   styleUrls: ['./learning-paths.page.scss'],
 })
-export class LearningPathsPage implements OnInit {
+export class LearningPathsPage implements ViewDidEnter {
   public learningPaths: LearningPath[] = [];
   public filteredPaths: LearningPath[] = [];
 
@@ -19,7 +19,7 @@ export class LearningPathsPage implements OnInit {
               private _modalController: ModalController,
               public userService: UserService) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this._learningPathService.getAllLearningPaths().subscribe(res => {
       this.learningPaths = res.learningPaths;
       this.filteredPaths = res.learningPaths;

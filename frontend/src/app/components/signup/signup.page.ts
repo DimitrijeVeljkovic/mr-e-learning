@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
@@ -8,13 +8,10 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
 
   constructor(private _userService: UserService,
               private _toastController: ToastController) { }
-
-  ngOnInit() {
-  }
 
   public handleSignup(form: NgForm) {
     this._userService.signup({ ...form.value }).subscribe(res => {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicModule, ModalController, ToastController } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
@@ -16,7 +16,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [ IonicModule, CommonModule, RouterModule ]
 })
-export class CourseCardComponent  implements OnInit {
+export class CourseCardComponent {
   @Input() course: Course;
   @Input() state: State = State.ALL;
   @Input() dateFinished: string;
@@ -57,8 +57,6 @@ export class CourseCardComponent  implements OnInit {
               private _courseService: CourseService,
               private _toastController: ToastController,
               private _modalController: ModalController) { }
-
-  ngOnInit() {}
 
   public async open() {
     const modal = await this._modalController.create({

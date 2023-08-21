@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Course } from '../../interfaces/course';
 import { CourseService } from 'src/app/services/course.service';
 import { State } from 'src/app/enums/state';
+import { ViewDidEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.page.html',
   styleUrls: ['./courses.page.scss'],
 })
-export class CoursesPage implements OnInit {
+export class CoursesPage implements ViewDidEnter {
   public allCourses: Course[] = [];
   public filteredCourses: Course[] = [];
   public state: State = State.ALL;
 
   constructor(private _courseService: CourseService) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     this._courseService.getAllCourses().subscribe(res => {
       this.allCourses = res.courses;
       this.filteredCourses = res.courses;

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
-import { combineLatest, forkJoin, of, switchMap } from 'rxjs';
+import { ToastController, ViewDidEnter } from '@ionic/angular';
+import { combineLatest } from 'rxjs';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './course.page.html',
   styleUrls: ['./course.page.scss'],
 })
-export class CoursePage implements OnInit {
+export class CoursePage implements ViewDidEnter {
   public course: InProgressCourse | null = null;
   public selectedSegment: string = 'content';
 
@@ -24,7 +24,7 @@ export class CoursePage implements OnInit {
               private _router: Router,
               public sanitizer: DomSanitizer) { }
 
-  ngOnInit() {
+  ionViewDidEnter() {
     combineLatest([
       this._route.params,
       this._userService.getInProgressCourses()
@@ -33,7 +33,6 @@ export class CoursePage implements OnInit {
       const inProgressCourses = inProgress.inProgressCourses;
       
       this.course = inProgressCourses.find(c => c.course._id === courseId)!;
-      console.log(this.course.course.finalTest);
     });
   }
 

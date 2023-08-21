@@ -9,15 +9,12 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './reset-password.page.html',
   styleUrls: ['./reset-password.page.scss'],
 })
-export class ResetPasswordPage implements OnInit {
+export class ResetPasswordPage {
   public codeSent = false;
 
   constructor(private _userService: UserService,
               private _router: Router,
               private _toastController: ToastController) { }
-
-  ngOnInit() {
-  }
 
   public sendCode(form: NgForm) {
     this._userService.sendVerificationCode(form.value)
