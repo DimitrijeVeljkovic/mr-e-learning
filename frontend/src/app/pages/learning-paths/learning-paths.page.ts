@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LearningPath } from 'src/app/interfaces/learning-path';
 import { LearningPathService } from 'src/app/services/learning-path.service';
 import { UserService } from 'src/app/services/user.service';
-import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
+import { CommentsModalComponent } from '../../components/comments-modal/comments-modal.component';
 import { Course } from 'src/app/interfaces/course';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
 

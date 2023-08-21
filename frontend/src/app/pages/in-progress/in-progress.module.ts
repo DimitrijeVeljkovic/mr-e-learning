@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { InProgressPageRoutingModule } from './in-progress-routing.module';
 
 import { InProgressPage } from './in-progress.page';
-import { CourseCardComponent } from '../course-card/course-card.component';
+import { CourseCardComponent } from '../../components/course-card/course-card.component';
 
 @NgModule({
   imports: [

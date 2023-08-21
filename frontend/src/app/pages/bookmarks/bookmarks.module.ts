@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BookmarksPageRoutingModule } from './bookmarks-routing.module';
 
 import { BookmarksPage } from './bookmarks.page';
-import { CourseCardComponent } from '../course-card/course-card.component';
+import { CourseCardComponent } from '../../components/course-card/course-card.component';
 
 @NgModule({
   imports: [

@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { CoursesPageRoutingModule } from './courses-routing.module';
 
 import { CoursesPage } from './courses.page';
-import { CourseCardComponent } from '../course-card/course-card.component';
+import { CourseCardComponent } from '../../components/course-card/course-card.component';
 
 @NgModule({
   imports: [

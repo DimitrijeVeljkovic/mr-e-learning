@@ -7,7 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { AuthInterceptorService } from './interceptors/auth-interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
