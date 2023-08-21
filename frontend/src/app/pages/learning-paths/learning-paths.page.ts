@@ -7,6 +7,7 @@ import { Course } from 'src/app/interfaces/course';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
 import { CourseService } from 'src/app/services/course.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-learning-paths',
@@ -21,6 +22,7 @@ export class LearningPathsPage implements ViewDidEnter {
               private _modalController: ModalController,
               private _courseService: CourseService,
               private _toastService: ToastService,
+              private _router: Router,
               public userService: UserService) { }
 
   ionViewDidEnter() {
@@ -40,6 +42,7 @@ export class LearningPathsPage implements ViewDidEnter {
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
           this._toastService.showToast(res.message);
+          this._router.navigate(['/in-progress', courseId]);
         }, 
         err => {
           this._toastService.showToast(err.error.message);

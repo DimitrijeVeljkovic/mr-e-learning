@@ -7,7 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
 import { CourseService } from 'src/app/services/course.service';
 import { jsPDF } from 'jspdf';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
@@ -57,6 +57,7 @@ export class CourseCardComponent {
   constructor(private _courseService: CourseService,
               private _toastService: ToastService,
               private _modalController: ModalController,
+              private _router: Router,
               public userService: UserService) { }
 
   public async open() {
@@ -101,7 +102,8 @@ export class CourseCardComponent {
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
           this._toastService.showToast(res.message);
-        }, 
+          this._router.navigate(['/in-progress', this.course._id]);
+        },
         err => {
           this._toastService.showToast(err.error.message);
         }
