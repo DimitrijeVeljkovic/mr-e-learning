@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
@@ -34,20 +35,25 @@ const routes: Routes = [
         path: ':courseId',
         loadChildren: () => import('./pages/course/course.module').then( m => m.CoursePageModule)
       }
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: 'bookmarks',
-    loadChildren: () => import('./pages/bookmarks/bookmarks.module').then( m => m.BookmarksPageModule)
+    loadChildren: () => import('./pages/bookmarks/bookmarks.module').then( m => m.BookmarksPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'completed',
-    loadChildren: () => import('./pages/completed/completed.module').then( m => m.CompletedPageModule)
+    loadChildren: () => import('./pages/completed/completed.module').then( m => m.CompletedPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  }
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
+    canActivate: [AuthGuard]
+  },
+  { path: '**', redirectTo: 'courses' }
 ];
 
 @NgModule({

@@ -21,7 +21,6 @@ export class LoginPage implements ViewDidLeave {
   ionViewDidLeave() {
     const userId = this._userService.isAuthenticated() ? this._userService.getAuthData().userId : null;
     this._courseService.getCounts(userId).subscribe(res => {
-      console.log(res);
       this._courseService.courseCounter$.next(res.courseCount);
       this._courseService.learningPathCounter$.next(res.learningPathCount);
 
