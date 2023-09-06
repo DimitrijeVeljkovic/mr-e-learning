@@ -16,8 +16,8 @@ export class CourseService {
 
   constructor(private _http: HttpClient) { }
 
-  public getAllCourses(): Observable<{ courses: Course[] }> {
-    return this._http.get('http://localhost:3000/api/courses') as Observable<{courses: Course[]}>;
+  public getAllCourses(): Observable<Course[]> {
+    return this._http.get('http://localhost:8080/api/courses') as Observable<Course[]>;
   }
 
   public postComment(body: { userName: string, comment: string }, courseId: string): Observable<{ comments: Comment[] }> {

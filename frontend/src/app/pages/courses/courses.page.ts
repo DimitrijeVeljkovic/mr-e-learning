@@ -19,8 +19,8 @@ export class CoursesPage implements ViewDidEnter {
 
   ionViewDidEnter() {
     this._courseService.getAllCourses().subscribe(res => {
-      this.allCourses = res.courses;
-      this.filteredCourses = res.courses;
+      this.allCourses = res;
+      this.filteredCourses = res;
     });
   }
 

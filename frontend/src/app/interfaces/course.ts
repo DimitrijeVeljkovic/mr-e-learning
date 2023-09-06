@@ -5,11 +5,12 @@ import { Section } from "./section";
 
 export interface Course {
     _id: string;
+    courseId: number;
     title: string;
     description: string;
     imageUrl: string;
-    sections: Section[];
+    sections?: Section[];
     ratings: Rating[];
-    comments: Comment[];
-    finalTest: Question[];
+    comments?: Comment[];
+    finalTest?: Question[];
 }
