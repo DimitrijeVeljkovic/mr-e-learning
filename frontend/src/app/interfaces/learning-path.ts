@@ -2,7 +2,11 @@ import { Course } from "./course";
 
 export interface LearningPath {
     _id: string;
+    learningPathId: number;
     title: string;
-    courses: Course[];
+    lpCourses: {
+        learningPathCourseId: number;
+        course: Course;
+    }[];
     imageUrl: string;
 }

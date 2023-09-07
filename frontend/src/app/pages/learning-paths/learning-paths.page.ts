@@ -27,8 +27,8 @@ export class LearningPathsPage implements ViewDidEnter {
 
   ionViewDidEnter() {
     this._learningPathService.getAllLearningPaths().subscribe(res => {
-      this.learningPaths = res.learningPaths;
-      this.filteredPaths = res.learningPaths;
+      this.learningPaths = res;
+      this.filteredPaths = res;
     });
   }
 

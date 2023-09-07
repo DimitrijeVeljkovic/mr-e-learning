@@ -17,6 +17,8 @@ export class SignupPage {
     this._userService.signup({ ...form.value }).subscribe(res => {
       form.resetForm();
       this._toastService.showToast(res.message);
+    }, err => {
+      this._toastService.showToast(err.error.message, 'danger')
     });
   }
 }

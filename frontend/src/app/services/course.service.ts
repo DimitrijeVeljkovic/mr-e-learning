@@ -36,7 +36,7 @@ export class CourseService {
     completeCount: number
   }> {
     const queryParams = userId ? `?userId=${userId}` : '';
-    return this._http.get(`http://localhost:3000/api/courses/count${queryParams}`) as Observable<{
+    return this._http.get(`http://localhost:8080/api/courses/count${queryParams}`) as Observable<{
       courseCount: number,
       learningPathCount: number,
       inProgressCount: number,

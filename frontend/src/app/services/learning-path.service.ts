@@ -10,7 +10,7 @@ export class LearningPathService {
 
   constructor(private _http: HttpClient) { }
 
-  public getAllLearningPaths(): Observable<{ learningPaths: LearningPath[] }> {
-    return this._http.get('http://localhost:3000/api/learning-paths') as Observable<{ learningPaths: LearningPath[] }>;
+  public getAllLearningPaths(): Observable<LearningPath[]> {
+    return this._http.get('http://localhost:8080/api/learning-paths') as Observable<LearningPath[]>;
   }
 }
