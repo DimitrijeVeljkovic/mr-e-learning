@@ -20,12 +20,12 @@ export class CourseService {
     return this._http.get('http://localhost:8080/api/courses') as Observable<Course[]>;
   }
 
-  public postComment(body: { userName: string, comment: string }, courseId: string): Observable<{ comments: Comment[] }> {
-    return this._http.post(`http://localhost:3000/api/courses/${courseId}/add-comment`, body) as Observable<{ comments: Comment[] }>;
+  public postComment(body: { userId: number, comment: string }, courseId: number): Observable<Comment> {
+    return this._http.post(`http://localhost:8080/api/courses/${courseId}/add-comment`, body) as Observable<Comment>;
   }
 
-  public addRating(body: { userName: string, rating: number }, courseId: string): Observable<{ averageRating: number }> {
-    return this._http.post(`http://localhost:3000/api/courses/${courseId}/add-rating`, body) as Observable<{ averageRating: number }>;
+  public addRating(body: { userId: number, rating: number }, courseId: number): Observable<any> {
+    return this._http.post(`http://localhost:8080/api/courses/${courseId}/add-rating`, body) as Observable<any>;
   }
 
   public getCounts(userId: string | null): Observable<{

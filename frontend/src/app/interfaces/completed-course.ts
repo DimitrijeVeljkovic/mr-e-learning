@@ -2,7 +2,6 @@ import { Course } from "./course";
 
 export interface CompletedCourse {
     course: Course;
-    dateFinished: string;
+    date: string;
     percentage: number;
-    notes: string[];
 }

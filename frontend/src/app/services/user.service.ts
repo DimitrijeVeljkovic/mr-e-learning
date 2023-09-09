@@ -17,8 +17,8 @@ export class UserService {
     return this._http.post('http://localhost:8080/api/user/signup', body) as Observable<{ message: string, result: User }>;
   }
 
-  public login(body: User): Observable<{ token: string, user: User }> {
-    return this._http.post('http://localhost:8080/api/user/login', body) as Observable<{ token: string, user: User }>;
+  public login(body: User): Observable<{ token: string, result: User }> {
+    return this._http.post('http://localhost:8080/api/user/login', body) as Observable<{ token: string, result: User }>;
   }
 
   public storeAuthData(token: string, userId: string, userName: string) {
@@ -57,36 +57,36 @@ export class UserService {
     return this._http.put('http://localhost:3000/api/user/reset-password', body) as Observable<{ message: string }>;
   }
 
-  public getBookmarkedCourses(): Observable<{ bookmarkedCourses: Course[] }> {
-    return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}/bookmarked-courses`) as Observable<{ bookmarkedCourses: Course[] }>;
+  public getBookmarkedCourses(): Observable<{ course: Course }[]> {
+    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/bookmarked-courses`) as Observable<{ course: Course }[]>;
   }
 
-  public getInProgressCourses(): Observable<{ inProgressCourses: InProgressCourse[] }> {
-    return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}/in-progress-courses`) as Observable<{ inProgressCourses: InProgressCourse[] }>;
+  public getInProgressCourses(): Observable<InProgressCourse[]> {
+    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/in-progress-courses`) as Observable<InProgressCourse[]>;
   }
 
-  public getCompletedCourses(): Observable<{ finishedCourses: CompletedCourse[] }> {
-    return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}/finished-courses`) as Observable<{ finishedCourses: CompletedCourse[] }>;
+  public getCompletedCourses(): Observable<CompletedCourse[]> {
+    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/finished-courses`) as Observable<CompletedCourse[]>;
   }
 
-  public startCourse(body: { courseId: string }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/start-course`, body) as Observable<{ message: string }>;
+  public startCourse(body: { courseId: number }): Observable<{ message: string }> {
+    return this._http.post(`http://localhost:8080/api/user/${this.getAuthData().userId}/start-course`, body) as Observable<{ message: string }>;
   }
 
-  public bookmarkCourse(body: { courseId: string }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:3000/api/user/${this.getAuthData().userId}/bookmark-course`, body) as Observable<{ message: string }>;
+  public bookmarkCourse(body: { courseId: number }): Observable<{ message: string }> {
+    return this._http.post(`http://localhost:8080/api/user/${this.getAuthData().userId}/bookmark-course`, body) as Observable<{ message: string }>;
   }
 
-  public getUserData(): Observable<{ user: User }> {
-    return this._http.get(`http://localhost:3000/api/user/${this.getAuthData().userId}`) as Observable<{ user: User }>;
+  public getUserData(): Observable<User> {
+    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}`) as Observable<User>;
   }
 
   public updateUserData(body: User): Observable<{ message: string, user: User }> {
-    return this._http.put(`http://localhost:3000/api/user/${this.getAuthData().userId}/change`, body) as Observable<{ message: string, user: User }>;
+    return this._http.put(`http://localhost:8080/api/user/${this.getAuthData().userId}/change`, body) as Observable<{ message: string, user: User }>;
   }
 
   public deleteUser(): Observable<{ message: string }> {
-    return this._http.delete(`http://localhost:3000/api/user/${this.getAuthData().userId}/delete`) as Observable<{ message: string }>;
+    return this._http.delete(`http://localhost:8080/api/user/${this.getAuthData().userId}/delete`) as Observable<{ message: string }>;
   }
 
   public addNote(courseId: string, body: { newNote: string }): Observable<{ message: string, note: string }> {

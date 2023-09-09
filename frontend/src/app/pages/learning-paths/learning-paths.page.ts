@@ -36,7 +36,7 @@ export class LearningPathsPage implements ViewDidEnter {
     this.filteredPaths = this.learningPaths.filter(path => path.title.toUpperCase().includes(event.detail.value.toUpperCase()));
   }
 
-  public startCourse(courseId: string) {
+  public startCourse(courseId: number) {
     this.userService.startCourse({ courseId })
       .subscribe(
         res => {
@@ -50,7 +50,7 @@ export class LearningPathsPage implements ViewDidEnter {
       );
   }
 
-  public bookmarkCourse(courseId: string) {
+  public bookmarkCourse(courseId: number) {
     this.userService.bookmarkCourse({ courseId })
       .subscribe(
         res => {

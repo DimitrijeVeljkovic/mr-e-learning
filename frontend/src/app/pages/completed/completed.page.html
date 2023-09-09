@@ -4,7 +4,7 @@
         <ion-col *ngFor="let course of completedCourses" size="12" sizeLg="6">
             <app-course-card [course]="course.course"
                              [state]="state"
-                             [dateFinished]="course.dateFinished"
+                             [dateFinished]="course.date"
                              [percentage]="course.percentage">
             </app-course-card>
         </ion-col>

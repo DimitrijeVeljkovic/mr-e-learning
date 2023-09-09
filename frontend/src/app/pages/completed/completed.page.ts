@@ -17,7 +17,7 @@ export class CompletedPage implements ViewDidEnter {
 
   ionViewDidEnter() {
     this._userService.getCompletedCourses().subscribe(res => {
-      this.completedCourses = res.finishedCourses;
+      this.completedCourses = res;
     });
   }
 

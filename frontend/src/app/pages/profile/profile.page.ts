@@ -33,7 +33,7 @@ export class ProfilePage implements ViewDidEnter {
 
   ionViewDidEnter() {
     this._userService.getUserData().subscribe(res => {
-      this.user = res.user;
+      this.user = res;
     });
   }
 

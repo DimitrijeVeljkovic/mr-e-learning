@@ -37,7 +37,7 @@ export class LoginPage implements ViewDidLeave {
       .subscribe(
         res => {
           form.resetForm();
-          this._userService.storeAuthData(res.token, res.user._id || '', res.user.userName || '');
+          this._userService.storeAuthData(res.token, res.result.userId || '', res.result.userName || '');
           this._router.navigate(['/courses']);
         },
         err => {

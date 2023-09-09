@@ -2,7 +2,7 @@
   <ng-container *ngIf="inProgressCourses">
     <ion-row *ngIf="inProgressCourses.length; else noCourses">
         <ion-col *ngFor="let course of inProgressCourses" size="12" sizeLg="6">
-            <app-course-card [course]="course.course"
+            <app-course-card [course]="course"
                              [state]="state">
             </app-course-card>
         </ion-col>

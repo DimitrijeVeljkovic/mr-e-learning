@@ -17,7 +17,7 @@ export class BookmarksPage implements ViewDidEnter {
 
   ionViewDidEnter() {
     this._userService.getBookmarkedCourses().subscribe(res => {
-      this.bookmarkedCourses = res.bookmarkedCourses;
+      this.bookmarkedCourses = res.map(r => r.course);
     });
   }
 

@@ -86,23 +86,23 @@ export class CourseCardComponent {
     });
 
     const newRating = { 
-      userName: this.userService.getAuthData().userName || '',
+      userId: +(this.userService.getAuthData().userId || 0),
       rating: rating 
     };
 
-    this._courseService.addRating(newRating, this.course._id)
-      .subscribe(() => {
-        this.course.ratings.push({ ...newRating, _id: '' });
+    this._courseService.addRating(newRating, this.course.courseId)
+      .subscribe(res => {
+        this.course.ratings.push(res);
       });
   }
 
   public startCourse() {
-    this.userService.startCourse({ courseId: this.course._id })
+    this.userService.startCourse({ courseId: this.course.courseId })
       .subscribe(
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
           this._toastService.showToast(res.message);
-          this._router.navigate(['/in-progress', this.course._id]);
+          this._router.navigate(['/in-progress', this.course.courseId]);
         },
         err => {
           this._toastService.showToast(err.error.message);
@@ -111,7 +111,7 @@ export class CourseCardComponent {
   }
 
   public bookmarkCourse() {
-    this.userService.bookmarkCourse({ courseId: this.course._id })
+    this.userService.bookmarkCourse({ courseId: this.course.courseId })
       .subscribe(
         res => {
           this._courseService.bookmarkCounter$.next(this._courseService.bookmarkCounter$.getValue() + 1);

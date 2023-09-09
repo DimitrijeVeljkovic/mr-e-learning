@@ -63,6 +63,18 @@
               required
               email>
             </ion-input>
+            <ion-input 
+              label="Password"
+              label-placement="floating" 
+              fill="outline" 
+              placeholder="Enter password..." 
+              type="password" 
+              class="ion-margin-bottom"
+              name="password"
+              [(ngModel)]="user.password"
+              required
+              minlength="8">
+            </ion-input>
             <ion-button [disabled]="!userDataForm.valid" type="ngSubmit">
               <ion-icon name="create-outline" slot="start"></ion-icon>Edit data
             </ion-button>

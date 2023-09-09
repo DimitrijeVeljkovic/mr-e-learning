@@ -26,11 +26,11 @@ export class CommentsModalComponent {
 
   public postComment(form: NgForm) {
     this._courseService.postComment({
-      userName: this.userService.getAuthData().userName || '',
+      userId: +(this.userService.getAuthData().userId || 0),
       comment: form.value.comment
-    }, this.course._id)
+    }, this.course.courseId)
       .subscribe(res => {
-        this.course.comments = res.comments;
+        this.course.comments?.push(res);
         form.resetForm();
       })
   }
