@@ -126,7 +126,7 @@ export class CourseCardComponent {
   public downloadCertificate() {
     const doc = new jsPDF();
     doc.text(`${this.course.title} - Certification`, 10, 20);
-    doc.text(`Issued by: MReLearning`, 10, 40);
+    doc.text(`Issued by: NJTeLearning`, 10, 40);
     doc.text(`Completed by: ${this.userService.getAuthData().userName}`, 10, 60);
     doc.text(`Completed with score: ${this.percentage}%`, 10, 80);
     doc.text(`Completed on date: ${this.dateFinished}`, 10, 100);

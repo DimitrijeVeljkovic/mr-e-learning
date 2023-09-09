@@ -35,7 +35,6 @@ export class CoursePage implements ViewDidEnter {
       const inProgressCourses = inProgress;
       
       this.course = inProgressCourses.find(c => c.course.courseId === +courseId)!;
-      console.log(inProgressCourses, courseId, this.course);
     });
   }
 
@@ -52,16 +51,16 @@ export class CoursePage implements ViewDidEnter {
   }
 
   public postComment(form: NgForm) {
-    // this._courseService.postComment({
-    //   userName: this._userService.getAuthData().userName || '',
-    //   comment: form.value.comment
-    // }, this.course?.course?._id || '')
-    //   .subscribe(res => {
-    //     if (this.course && this.course.course) {
-    //       this.course.course.comments = res.comments;
-    //     }
-    //     form.resetForm();
-    //   })
+    this._courseService.postComment({
+      userId: +(this._userService.getAuthData().userId || 0),
+      comment: form.value.comment
+    }, this.course?.course?.courseId || 0)
+      .subscribe(res => {
+        if (this.course && this.course.course) {
+          this.course.course.comments?.push(res);
+        }
+        form.resetForm();
+      });
   }
 
   public handleSubmitTest(form: NgForm) {
