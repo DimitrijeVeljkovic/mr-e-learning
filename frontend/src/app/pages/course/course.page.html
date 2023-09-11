@@ -42,7 +42,7 @@
             </ion-card-header>
             <ion-card-content>
               <div *ngFor="let paragraph of section.paragraphs" class="ion-text-justify ion-margin-bottom">
-                {{ paragraph }}
+                {{ paragraph.data }}
               </div>
               <div *ngIf="section.videoUrl">
                 <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(section.videoUrl)" frameborder="0" allowfullscreen></iframe>
@@ -89,7 +89,7 @@
         <div *ngSwitchCase="'test'" class="ion-padding">
           <form #finalTestForm="ngForm" (ngSubmit)="handleSubmitTest(finalTestForm)">
             <ion-list>
-              <div *ngFor="let question of course?.course?.finalTest; let i = index">
+              <div *ngFor="let question of course?.course?.questions; let i = index">
                 <ion-item-divider>
                   <ion-label>
                     {{ question.question }}
@@ -99,7 +99,9 @@
                                  required
                                  ngModel>
                   <ion-item *ngFor="let option of question.options">
-                    <ion-radio [value]="{ question: question.question, answer: option }">{{ option }}</ion-radio>
+                    <ion-radio [value]="{ questionId: question.questionId, answer: option.option }">
+                      <ion-label>{{ option.option }}</ion-label>
+                    </ion-radio>
                   </ion-item>
                 </ion-radio-group>
               </div>

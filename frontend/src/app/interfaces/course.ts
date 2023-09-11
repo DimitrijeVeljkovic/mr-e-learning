@@ -12,5 +12,5 @@ export interface Course {
     sections?: Section[];
     ratings: Rating[];
     comments?: Comment[];
-    finalTest?: Question[];
+    questions?: Question[];
 }
