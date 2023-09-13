@@ -49,14 +49,6 @@ export class UserService {
     return this.getAuthData().token !== null;
   }
 
-  public sendVerificationCode(body: { email: string }): Observable<{ message: string }> {
-    return this._http.put('http://localhost:3000/api/user/send-code', body) as Observable<{ message: string }>;
-  }
-
-  public resetPassword(body: { email: string, newPassword: string, verificationCode: string }): Observable<{ message: string }> {
-    return this._http.put('http://localhost:3000/api/user/reset-password', body) as Observable<{ message: string }>;
-  }
-
   public getBookmarkedCourses(): Observable<{ course: Course }[]> {
     return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/bookmarked-courses`) as Observable<{ course: Course }[]>;
   }

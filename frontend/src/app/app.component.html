@@ -10,7 +10,7 @@
         <ion-buttons slot="secondary">
           <ion-button [routerLink]="['/profile']" routerLinkActive="active"> 
             <ion-icon slot="start" name="person-outline"></ion-icon>
-            Profile
+            {{ userService.getAuthData().userName }}
           </ion-button>
         </ion-buttons>
       </ng-container>

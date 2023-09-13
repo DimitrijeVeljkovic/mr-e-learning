@@ -19,6 +19,10 @@ export class CoursePage implements ViewDidEnter {
   public course: InProgressCourse | null = null;
   public selectedSegment: string = 'content';
 
+  public get myUserName(): string {
+    return this._userService.getAuthData().userName || '';
+  }
+
   constructor(private _route: ActivatedRoute,
               private _userService: UserService,
               private _courseService: CourseService,
