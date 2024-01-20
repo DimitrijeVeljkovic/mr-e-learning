@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
@@ -17,7 +17,7 @@ import { ToastService } from 'src/app/services/toast.service';
   standalone: true,
   imports: [ IonicModule, CommonModule, RouterModule ]
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
   @Input() course: Course;
   @Input() state: State = State.ALL;
   @Input() dateFinished: string;
@@ -60,6 +60,11 @@ export class CourseCardComponent {
               private _router: Router,
               public userService: UserService) { }
 
+  ngOnInit(): void {
+    this._courseService.getRatingForUser(this.course.courseId, +(this.userService.getAuthData().userId || 0))
+      .subscribe(result => this._colorStars(result.rating));
+  }
+
   public async open() {
     const modal = await this._modalController.create({
       component: CommentsModalComponent,
@@ -69,22 +74,6 @@ export class CourseCardComponent {
   }
 
   public rateCourse(rating: number) {
-    this.stars = this.stars.map(star => {
-      if (star.rating <= rating) {
-        return {
-          rating: star.rating,
-          color: 'warning',
-          name: 'star'
-        }
-      }
-
-      return {
-        rating: star.rating,
-        color: 'dark',
-        name: 'star-outline'
-      }
-    });
-
     const newRating = { 
       userId: +(this.userService.getAuthData().userId || 0),
       rating: rating 
@@ -92,7 +81,15 @@ export class CourseCardComponent {
 
     this._courseService.addRating(newRating, this.course.courseId)
       .subscribe(res => {
-        this.course.ratings.push(res);
+        const userRatingForCourse = this.course.ratings.find(rating => rating.userId === newRating.userId);
+
+        if (userRatingForCourse) {
+          userRatingForCourse.rating = res.rating;
+        } else {
+          this.course.ratings.push({ ...newRating })
+        }
+        
+        this._colorStars(rating);
       });
   }
 
@@ -131,5 +128,23 @@ export class CourseCardComponent {
     doc.text(`Completed with score: ${this.percentage.toFixed(2)}%`, 10, 80);
     doc.text(`Completed on date: ${this.dateFinished}`, 10, 100);
     doc.save(`${this.course.title} - certification.pdf`);
+  }
+
+  private _colorStars(rating: number) {
+    this.stars = this.stars.map(star => {
+      if (star.rating <= rating) {
+        return {
+          rating: star.rating,
+          color: 'warning',
+          name: 'star'
+        }
+      }
+
+      return {
+        rating: star.rating,
+        color: 'dark',
+        name: 'star-outline'
+      }
+    });
   }
 }

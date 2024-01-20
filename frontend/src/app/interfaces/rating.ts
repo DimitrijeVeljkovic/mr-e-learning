@@ -1,5 +1,5 @@
 export interface Rating {
-    _id: string;
-    userName: string;
+    ratingId?: number;
+    userId?: number;
     rating: number;
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '../interfaces/course';
 import { Comment } from '../interfaces/comment';
+import { Rating } from '../interfaces/rating';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,15 @@ export class CourseService {
   }
 
   public postComment(body: { userId: number, comment: string }, courseId: number): Observable<Comment> {
-    return this._http.post(`http://localhost:8080/api/courses/${courseId}/add-comment`, body) as Observable<Comment>;
+    return this._http.post(`http://localhost:8080/api/courses/${courseId}/comment`, body) as Observable<Comment>;
   }
 
-  public addRating(body: { userId: number, rating: number }, courseId: number): Observable<any> {
-    return this._http.post(`http://localhost:8080/api/courses/${courseId}/add-rating`, body) as Observable<any>;
+  public addRating(body: { userId: number, rating: number }, courseId: number): Observable<Rating> {
+    return this._http.post(`http://localhost:8080/api/courses/${courseId}/rating`, body) as Observable<Rating>;
+  }
+
+  public getRatingForUser(courseId: number, userId: number): Observable<Rating> {
+    return this._http.get(`http://localhost:8080/api/courses/${courseId}/rating?userId=${userId}`) as Observable<Rating>
   }
 
   public getCounts(userId: string | null): Observable<{

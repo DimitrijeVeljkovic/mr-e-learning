@@ -77,7 +77,10 @@
                   <ion-col *ngFor="let note of course?.notes" size="6">
                     <ion-card color="primary" class="note-card">
                       <ion-card-content>
-                        {{ note.note }}
+                        <span>{{ note.note }}</span>
+                        <ion-button shape="round" color="danger">
+                          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                        </ion-button>
                       </ion-card-content>
                     </ion-card>
                   </ion-col>
