@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../interfaces/user';
+import { User } from '../../interfaces/user';
 import { Observable } from 'rxjs';
-import { Course } from '../interfaces/course';
-import { InProgressCourse } from '../interfaces/in-progress-course';
-import { CompletedCourse } from '../interfaces/completed-course';
+import { Course } from '../../interfaces/course';
+import { InProgressCourse } from '../../interfaces/in-progress-course';
+import { CompletedCourse } from '../../interfaces/completed-course';
 
 @Injectable({
   providedIn: 'root'

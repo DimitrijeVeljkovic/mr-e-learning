@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ViewDidEnter } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/api/user.service';
 
 @Component({
   selector: 'app-in-progress',

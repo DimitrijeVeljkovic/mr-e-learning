@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ViewDidEnter } from '@ionic/angular';
 import { User } from 'src/app/interfaces/user';
 import { ToastService } from 'src/app/services/toast.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/api/user.service';
 
 @Component({
   selector: 'app-profile',

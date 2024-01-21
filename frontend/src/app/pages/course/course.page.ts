@@ -4,11 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewDidEnter } from '@ionic/angular';
 import { combineLatest } from 'rxjs';
-import { Course } from 'src/app/interfaces/course';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
-import { CourseService } from 'src/app/services/course.service';
+import { CourseService } from 'src/app/services/api/course.service';
 import { ToastService } from 'src/app/services/toast.service';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/api/user.service';
 
 @Component({
   selector: 'app-course',

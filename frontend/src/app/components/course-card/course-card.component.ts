@@ -3,9 +3,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/api/user.service';
 import { CommentsModalComponent } from '../comments-modal/comments-modal.component';
-import { CourseService } from 'src/app/services/course.service';
+import { CourseService } from 'src/app/services/api/course.service';
 import { jsPDF } from 'jspdf';
 import { Router, RouterModule } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
@@ -88,7 +88,7 @@ export class CourseCardComponent implements OnInit {
         } else {
           this.course.ratings.push({ ...newRating })
         }
-        
+
         this._colorStars(rating);
       });
   }

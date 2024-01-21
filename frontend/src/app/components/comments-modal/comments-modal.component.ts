@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Course } from 'src/app/interfaces/course';
-import { CourseService } from 'src/app/services/course.service';
-import { UserService } from 'src/app/services/user.service';
+import { CourseService } from 'src/app/services/api/course.service';
+import { UserService } from 'src/app/services/api/user.service';
 
 @Component({
   selector: 'app-comments-modal',

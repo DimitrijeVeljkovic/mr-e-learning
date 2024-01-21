@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { LearningPath } from 'src/app/interfaces/learning-path';
-import { LearningPathService } from 'src/app/services/learning-path.service';
-import { UserService } from 'src/app/services/user.service';
+import { LearningPathService } from 'src/app/services/api/learning-path.service';
+import { UserService } from 'src/app/services/api/user.service';
 import { CommentsModalComponent } from '../../components/comments-modal/comments-modal.component';
 import { Course } from 'src/app/interfaces/course';
 import { ModalController, ViewDidEnter } from '@ionic/angular';
-import { CourseService } from 'src/app/services/course.service';
+import { CourseService } from 'src/app/services/api/course.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { Router } from '@angular/router';
 

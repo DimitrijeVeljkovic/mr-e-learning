@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ViewDidEnter } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { CompletedCourse } from 'src/app/interfaces/completed-course';
-import { UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/api/user.service';
 
 @Component({
   selector: 'app-completed',
