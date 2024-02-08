@@ -8,6 +8,7 @@ import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CourseService } from 'src/app/services/api/course.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/api/user.service';
+import { NoteService } from 'src/app/services/api/note.service';
 
 @Component({
   selector: 'app-course',
@@ -25,6 +26,7 @@ export class CoursePage implements ViewDidEnter {
   constructor(private _route: ActivatedRoute,
               private _userService: UserService,
               private _courseService: CourseService,
+              private _noteService: NoteService,
               private _toastService: ToastService,
               private _router: Router,
               public sanitizer: DomSanitizer) { }
@@ -46,11 +48,21 @@ export class CoursePage implements ViewDidEnter {
   }
 
   public addNote(form: NgForm) {
-    this._userService.addNote(this.course?.course.courseId || 0, form.value)
+    this._noteService.addNote(this.course?.course.courseId || 0, form.value)
       .subscribe(res => {
-        this.course?.notes.push({ noteId: 0, note: res.note });
+        this.course?.notes.push(res.note);
         form.resetForm();
       });
+  }
+
+  public deleteNote(noteId: number) {
+    this._noteService.deleteNote(noteId)
+      .subscribe(res => {
+        if (this.course) {
+          this.course.notes = this.course.notes.filter(note => note.noteId !== noteId);
+        }
+        this._toastService.showToast(res.message);
+      })
   }
 
   public postComment(form: NgForm) {

@@ -61,8 +61,10 @@ export class CourseCardComponent implements OnInit {
               public userService: UserService) { }
 
   ngOnInit(): void {
-    this._courseService.getRatingForUser(this.course.courseId, +(this.userService.getAuthData().userId || 0))
-      .subscribe(result => this._colorStars(result.rating));
+    if (this.userService.isAuthenticated()) {
+      this._courseService.getRatingForUser(this.course.courseId, +(this.userService.getAuthData().userId || 0))
+        .subscribe(result => this._colorStars(result.rating));
+    }
   }
 
   public async open() {

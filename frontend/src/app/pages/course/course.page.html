@@ -78,7 +78,7 @@
                     <ion-card color="primary" class="note-card">
                       <ion-card-content>
                         <span>{{ note.note }}</span>
-                        <ion-button shape="round" color="danger">
+                        <ion-button shape="round" color="danger" (click)="deleteNote(note.noteId)">
                           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                         </ion-button>
                       </ion-card-content>
