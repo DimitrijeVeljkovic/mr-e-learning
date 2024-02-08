@@ -47,14 +47,17 @@ export class CourseService {
     return this._http.post(`http://localhost:8080/api/courses/bookmark?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
   }
 
+  // ToDo: move in newly created CommentService
   public postComment(body: { userId: number, comment: string }, courseId: number): Observable<Comment> {
     return this._http.post(`http://localhost:8080/api/courses/${courseId}/comment`, body) as Observable<Comment>;
   }
 
+  // ToDo: move in newly created RatingService
   public addRating(body: { userId: number, rating: number }, courseId: number): Observable<Rating> {
     return this._http.post(`http://localhost:8080/api/courses/${courseId}/rating`, body) as Observable<Rating>;
   }
 
+  // ToDo: move in newly created RatingService
   public getRatingForUser(courseId: number, userId: number): Observable<Rating> {
     return this._http.get(`http://localhost:8080/api/courses/${courseId}/rating?userId=${userId}`) as Observable<Rating>
   }
@@ -74,5 +77,9 @@ export class CourseService {
       bookmarkCount: number,
       completeCount: number
     }>;
+  }
+
+  public submitTest(courseId: number, body: { questionId: number, answer: string }[]): Observable<{ message: string }> {
+    return this._http.post(`http://localhost:8080/api/courses/submit/${courseId}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
   }
 }

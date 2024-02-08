@@ -82,7 +82,7 @@ export class CoursePage implements ViewDidEnter {
     const test = form.value;
     const body = Object.keys(test).map(key => test[key]) as { questionId: number; answer: string; }[];
     
-    this._userService.submitTest(this.course?.course.courseId || 0, body)
+    this._courseService.submitTest(this.course?.course.courseId || 0, body)
       .subscribe(
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() - 1);
