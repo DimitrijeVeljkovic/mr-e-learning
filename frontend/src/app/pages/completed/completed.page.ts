@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ViewDidEnter } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { CompletedCourse } from 'src/app/interfaces/completed-course';
-import { UserService } from 'src/app/services/api/user.service';
+import { CourseService } from 'src/app/services/api/course.service';
 
 @Component({
   selector: 'app-completed',
@@ -13,10 +13,10 @@ export class CompletedPage implements ViewDidEnter {
   public completedCourses: CompletedCourse[];
   public state: State = State.COMPLETED;
 
-  constructor(private _userService: UserService) { }
+  constructor(private _courseService: CourseService) { }
 
   ionViewDidEnter() {
-    this._userService.getCompletedCourses().subscribe(res => {
+    this._courseService.getCompletedCourses().subscribe(res => {
       this.completedCourses = res;
     });
   }

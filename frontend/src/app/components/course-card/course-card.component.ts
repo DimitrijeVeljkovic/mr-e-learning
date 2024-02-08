@@ -96,7 +96,7 @@ export class CourseCardComponent implements OnInit {
   }
 
   public startCourse() {
-    this.userService.startCourse({ courseId: this.course.courseId })
+    this._courseService.startCourse({ courseId: this.course.courseId })
       .subscribe(
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
@@ -110,7 +110,7 @@ export class CourseCardComponent implements OnInit {
   }
 
   public bookmarkCourse() {
-    this.userService.bookmarkCourse({ courseId: this.course.courseId })
+    this._courseService.bookmarkCourse({ courseId: this.course.courseId })
       .subscribe(
         res => {
           this._courseService.bookmarkCounter$.next(this._courseService.bookmarkCounter$.getValue() + 1);

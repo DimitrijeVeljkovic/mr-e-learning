@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ViewDidEnter } from '@ionic/angular';
 import { State } from 'src/app/enums/state';
 import { Course } from 'src/app/interfaces/course';
-import { UserService } from 'src/app/services/api/user.service';
+import { CourseService } from 'src/app/services/api/course.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -13,10 +13,10 @@ export class BookmarksPage implements ViewDidEnter {
   public bookmarkedCourses: Course[];
   public state: State = State.BOOKMARKED;
 
-  constructor(private _userService: UserService) { }
+  constructor(private _courseService: CourseService) { }
 
   ionViewDidEnter() {
-    this._userService.getBookmarkedCourses().subscribe(res => {
+    this._courseService.getBookmarkedCourses().subscribe(res => {
       this.bookmarkedCourses = res.map(r => r.course);
     });
   }

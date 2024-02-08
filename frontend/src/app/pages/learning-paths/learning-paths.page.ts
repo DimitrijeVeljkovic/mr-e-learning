@@ -37,7 +37,7 @@ export class LearningPathsPage implements ViewDidEnter {
   }
 
   public startCourse(courseId: number) {
-    this.userService.startCourse({ courseId })
+    this._courseService.startCourse({ courseId })
       .subscribe(
         res => {
           this._courseService.inProgressCounter$.next(this._courseService.inProgressCounter$.getValue() + 1);
@@ -51,7 +51,7 @@ export class LearningPathsPage implements ViewDidEnter {
   }
 
   public bookmarkCourse(courseId: number) {
-    this.userService.bookmarkCourse({ courseId })
+    this._courseService.bookmarkCourse({ courseId })
       .subscribe(
         res => {
           this._courseService.bookmarkCounter$.next(this._courseService.bookmarkCounter$.getValue() + 1);

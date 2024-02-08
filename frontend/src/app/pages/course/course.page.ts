@@ -34,7 +34,7 @@ export class CoursePage implements ViewDidEnter {
   ionViewDidEnter() {
     combineLatest([
       this._route.params,
-      this._userService.getInProgressCourses()
+      this._courseService.getInProgressCourses()
     ]).subscribe(([params, inProgress]) => {
       const courseId = params['courseId'];
       const inProgressCourses = inProgress;

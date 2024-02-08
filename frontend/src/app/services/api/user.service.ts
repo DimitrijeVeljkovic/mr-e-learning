@@ -2,9 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../interfaces/user';
 import { Observable } from 'rxjs';
-import { Course } from '../../interfaces/course';
-import { InProgressCourse } from '../../interfaces/in-progress-course';
-import { CompletedCourse } from '../../interfaces/completed-course';
 
 @Injectable({
   providedIn: 'root'
@@ -47,26 +44,6 @@ export class UserService {
 
   public isAuthenticated(): boolean {
     return this.getAuthData().token !== null;
-  }
-
-  public getBookmarkedCourses(): Observable<{ course: Course }[]> {
-    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/bookmarked-courses`) as Observable<{ course: Course }[]>;
-  }
-
-  public getInProgressCourses(): Observable<InProgressCourse[]> {
-    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/in-progress-courses`) as Observable<InProgressCourse[]>;
-  }
-
-  public getCompletedCourses(): Observable<CompletedCourse[]> {
-    return this._http.get(`http://localhost:8080/api/user/${this.getAuthData().userId}/finished-courses`) as Observable<CompletedCourse[]>;
-  }
-
-  public startCourse(body: { courseId: number }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:8080/api/user/${this.getAuthData().userId}/start-course`, body) as Observable<{ message: string }>;
-  }
-
-  public bookmarkCourse(body: { courseId: number }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:8080/api/user/${this.getAuthData().userId}/bookmark-course`, body) as Observable<{ message: string }>;
   }
 
   public getUserData(): Observable<User> {
