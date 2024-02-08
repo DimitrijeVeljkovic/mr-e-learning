@@ -51,10 +51,10 @@ export class UserService {
   }
 
   public updateUserData(body: User): Observable<{ message: string, user: User }> {
-    return this._http.put(`http://localhost:8080/api/user/${this.getAuthData().userId}/change`, body) as Observable<{ message: string, user: User }>;
+    return this._http.put(`http://localhost:8080/api/user/${this.getAuthData().userId}`, body) as Observable<{ message: string, user: User }>;
   }
 
   public deleteUser(): Observable<{ message: string }> {
-    return this._http.delete(`http://localhost:8080/api/user/${this.getAuthData().userId}/delete`) as Observable<{ message: string }>;
+    return this._http.delete(`http://localhost:8080/api/user/${this.getAuthData().userId}`) as Observable<{ message: string }>;
   }
 }
