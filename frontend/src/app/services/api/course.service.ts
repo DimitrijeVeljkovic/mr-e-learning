@@ -7,6 +7,7 @@ import { Rating } from '../../interfaces/rating';
 import { UserService } from './user.service';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CompletedCourse } from 'src/app/interfaces/completed-course';
+import { API_ROUTES } from 'src/app/constants/api.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -24,27 +25,27 @@ export class CourseService {
   ) { }
 
   public getAllCourses(): Observable<Course[]> {
-    return this._http.get('http://localhost:8080/api/courses') as Observable<Course[]>;
+    return this._http.get(API_ROUTES.COURSES.BASE) as Observable<Course[]>;
   }
 
   public getBookmarkedCourses(): Observable<{ course: Course }[]> {
-    return this._http.get(`http://localhost:8080/api/courses/bookmark?userId=${this._userService.getAuthData().userId}`) as Observable<{ course: Course }[]>;
+    return this._http.get(`${API_ROUTES.COURSES.BOOKMARK}?userId=${this._userService.getAuthData().userId}`) as Observable<{ course: Course }[]>;
   }
 
   public getInProgressCourses(): Observable<InProgressCourse[]> {
-    return this._http.get(`http://localhost:8080/api/courses/in-progress?userId=${this._userService.getAuthData().userId}`) as Observable<InProgressCourse[]>;
+    return this._http.get(`${API_ROUTES.COURSES.IN_PROGRESS}?userId=${this._userService.getAuthData().userId}`) as Observable<InProgressCourse[]>;
   }
 
   public getCompletedCourses(): Observable<CompletedCourse[]> {
-    return this._http.get(`http://localhost:8080/api/courses/finish?userId=${this._userService.getAuthData().userId}`) as Observable<CompletedCourse[]>;
+    return this._http.get(`${API_ROUTES.COURSES.FINISH}?userId=${this._userService.getAuthData().userId}`) as Observable<CompletedCourse[]>;
   }
 
   public startCourse(body: { courseId: number }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:8080/api/courses/in-progress?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
+    return this._http.post(`${API_ROUTES.COURSES.IN_PROGRESS}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
   }
 
   public bookmarkCourse(body: { courseId: number }): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:8080/api/courses/bookmark?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
+    return this._http.post(`${API_ROUTES.COURSES.BOOKMARK}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
   }
 
   // ToDo: move in newly created CommentService
@@ -70,7 +71,7 @@ export class CourseService {
     completeCount: number
   }> {
     const queryParams = userId ? `?userId=${userId}` : '';
-    return this._http.get(`http://localhost:8080/api/courses/count${queryParams}`) as Observable<{
+    return this._http.get(`${API_ROUTES.COURSES.COUNT}${queryParams}`) as Observable<{
       courseCount: number,
       learningPathCount: number,
       inProgressCount: number,
@@ -80,6 +81,6 @@ export class CourseService {
   }
 
   public submitTest(courseId: number, body: { questionId: number, answer: string }[]): Observable<{ message: string }> {
-    return this._http.post(`http://localhost:8080/api/courses/submit/${courseId}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
+    return this._http.post(`${API_ROUTES.COURSES.SUBMIT}/${courseId}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
   }
 }
