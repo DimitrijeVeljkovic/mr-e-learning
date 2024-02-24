@@ -9,6 +9,7 @@ import { CourseService } from 'src/app/services/api/course.service';
 import { jsPDF } from 'jspdf';
 import { Router, RouterModule } from '@angular/router';
 import { ToastService } from 'src/app/services/toast.service';
+import { RatingService } from 'src/app/services/api/rating.service';
 
 @Component({
   selector: 'app-course-card',
@@ -56,13 +57,14 @@ export class CourseCardComponent implements OnInit {
 
   constructor(private _courseService: CourseService,
               private _toastService: ToastService,
+              private _ratingService: RatingService,
               private _modalController: ModalController,
               private _router: Router,
               public userService: UserService) { }
 
   ngOnInit(): void {
     if (this.userService.isAuthenticated()) {
-      this._courseService.getRatingForUser(this.course.courseId, +(this.userService.getAuthData().userId || 0))
+      this._ratingService.getRatingForUser(this.course.courseId, +(this.userService.getAuthData().userId || 0))
         .subscribe(result => this._colorStars(result.rating));
     }
   }
@@ -81,7 +83,7 @@ export class CourseCardComponent implements OnInit {
       rating: rating 
     };
 
-    this._courseService.addRating(newRating, this.course.courseId)
+    this._ratingService.addRating(newRating, this.course.courseId)
       .subscribe(res => {
         const userRatingForCourse = this.course.ratings.find(rating => rating.userId === newRating.userId);
 

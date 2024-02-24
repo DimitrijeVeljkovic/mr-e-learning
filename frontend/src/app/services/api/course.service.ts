@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '../../interfaces/course';
-import { Rating } from '../../interfaces/rating';
 import { UserService } from './user.service';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CompletedCourse } from 'src/app/interfaces/completed-course';
@@ -49,16 +48,6 @@ export class CourseService {
 
   public bookmarkCourse(body: { courseId: number }): Observable<{ message: string }> {
     return this._http.post(`${API_ROUTES.COURSES.BOOKMARK}?userId=${this._userService.getAuthData().userId}`, body) as Observable<{ message: string }>;
-  }
-
-  // ToDo: move in newly created RatingService
-  public addRating(body: { userId: number, rating: number }, courseId: number): Observable<Rating> {
-    return this._http.post(`http://localhost:8080/api/courses/${courseId}/rating`, body) as Observable<Rating>;
-  }
-
-  // ToDo: move in newly created RatingService
-  public getRatingForUser(courseId: number, userId: number): Observable<Rating> {
-    return this._http.get(`http://localhost:8080/api/courses/${courseId}/rating?userId=${userId}`) as Observable<Rating>
   }
 
   public getCounts(userId: string | null): Observable<{
