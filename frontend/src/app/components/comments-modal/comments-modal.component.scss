@@ -1,5 +1,9 @@
+@import '../../mixins/mixins.scss';
+
 :host {
     .blue-background {
         background-color: var(--ion-color-primary);
     }
+
+    @include comment-header;
 }

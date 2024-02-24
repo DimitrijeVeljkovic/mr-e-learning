@@ -9,6 +9,8 @@ import { CourseService } from 'src/app/services/api/course.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/api/user.service';
 import { NoteService } from 'src/app/services/api/note.service';
+import { CommentService } from 'src/app/services/api/comment.service';
+import { Comment } from 'src/app/interfaces/comment';
 
 @Component({
   selector: 'app-course',
@@ -27,6 +29,7 @@ export class CoursePage implements ViewDidEnter {
               private _userService: UserService,
               private _courseService: CourseService,
               private _noteService: NoteService,
+              private _commentService: CommentService,
               private _toastService: ToastService,
               private _router: Router,
               public sanitizer: DomSanitizer) { }
@@ -65,8 +68,18 @@ export class CoursePage implements ViewDidEnter {
       })
   }
 
+  public deleteComment(comment: Comment) {
+    this._commentService.deleteComment(comment.commentId)
+      .subscribe(res => {
+        if (this.course) {
+          this.course.course.comments = this.course.course.comments?.filter(c => c.commentId !== comment.commentId);
+        }
+        this._toastService.showToast(res.message);
+      })
+  }
+
   public postComment(form: NgForm) {
-    this._courseService.postComment({
+    this._commentService.postComment({
       userId: +(this._userService.getAuthData().userId || 0),
       comment: form.value.comment
     }, this.course?.course?.courseId || 0)

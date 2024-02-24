@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
+import { Comment } from 'src/app/interfaces/comment';
 import { Course } from 'src/app/interfaces/course';
-import { CourseService } from 'src/app/services/api/course.service';
+import { CommentService } from 'src/app/services/api/comment.service';
 import { UserService } from 'src/app/services/api/user.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-comments-modal',
@@ -17,7 +19,8 @@ export class CommentsModalComponent {
   @Input() public course: Course;
 
   constructor(private _modalController: ModalController,
-              private _courseService: CourseService,
+              private _commentService: CommentService,
+              private _toastService: ToastService,
               public userService: UserService) { }
 
   public close() {
@@ -25,7 +28,7 @@ export class CommentsModalComponent {
   }
 
   public postComment(form: NgForm) {
-    this._courseService.postComment({
+    this._commentService.postComment({
       userId: +(this.userService.getAuthData().userId || 0),
       comment: form.value.comment
     }, this.course.courseId)
@@ -33,6 +36,14 @@ export class CommentsModalComponent {
         this.course.comments?.push(res);
         form.resetForm();
       })
+  }
+
+  public deleteComment(comment: Comment) {
+    this._commentService.deleteComment(comment.commentId)
+      .subscribe(res => {
+        this.course.comments = this.course.comments?.filter(c => c.commentId !== comment.commentId);
+        this._toastService.showToast(res.message);
+      });
   }
 
 }

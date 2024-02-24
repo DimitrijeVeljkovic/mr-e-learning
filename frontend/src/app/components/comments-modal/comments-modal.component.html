@@ -10,14 +10,21 @@
 </ion-header>
 <ion-content class="ion-padding">
   <div *ngFor="let comment of course?.comments" class="ion-padding-bottom">
-    <ion-chip [ngClass]="{'blue-background': comment.user.userName === userService.getAuthData().userName}">
-      <ion-avatar>
-        <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-      </ion-avatar>
-      <ion-label>
-        {{ comment.user.userName === userService.getAuthData().userName ? 'You' : comment.user.userName }}
-      </ion-label>
-    </ion-chip>
+    <div class="comment-header">
+      <ion-chip [ngClass]="{'blue-background': comment.user.userName === userService.getAuthData().userName}">
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>
+          {{ comment.user.userName === userService.getAuthData().userName ? 'You' : comment.user.userName }}
+        </ion-label>
+      </ion-chip>
+      <ion-icon *ngIf="comment.user.userName === userService.getAuthData().userName" 
+                class="delete-comment" 
+                name="trash-outline"
+                (click)="deleteComment(comment)">
+      </ion-icon>
+    </div>
     <ion-item>
       {{ comment.comment }}
     </ion-item>

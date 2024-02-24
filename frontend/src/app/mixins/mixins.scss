@@ -13,3 +13,20 @@
         gap: 10px;
     }
 }
+
+@mixin comment-header {
+    .comment-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .delete-comment {
+            background-color: var(--ion-color-danger);
+            color: white;
+            border-radius: 500px;
+            font-size: 22px;
+            padding: 5px;
+            cursor: pointer;
+        }
+    }
+}
