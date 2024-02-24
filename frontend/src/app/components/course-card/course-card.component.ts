@@ -16,7 +16,7 @@ import { RatingService } from 'src/app/services/api/rating.service';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.scss'],
   standalone: true,
-  imports: [ IonicModule, CommonModule, RouterModule ]
+  imports: [IonicModule, CommonModule, RouterModule]
 })
 export class CourseCardComponent implements OnInit {
   @Input() course: Course;
@@ -126,12 +126,26 @@ export class CourseCardComponent implements OnInit {
 
   public downloadCertificate() {
     const doc = new jsPDF();
-    doc.text(`${this.course.title} - Certification`, 10, 20);
-    doc.text(`Issued by: NJTeLearning`, 10, 40);
-    doc.text(`Completed by: ${this.userService.getAuthData().userName}`, 10, 60);
-    doc.text(`Completed with score: ${this.percentage.toFixed(2)}%`, 10, 80);
-    doc.text(`Completed on date: ${this.dateFinished}`, 10, 100);
-    doc.save(`${this.course.title} - certification.pdf`);
+
+    doc.setFontSize(28);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'bold');
+
+    doc.text('Certificate of Excellence', 105, 40, { align: 'center' });
+
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont('helvetica', 'normal');
+
+    const content = `NJTeLearning certifies that\n\n${this.userService.getAuthData().userName}\n\nsuccessfully completed\n${this.course.title} course\non ${this.dateFinished}.`;
+
+    doc.text(content, 105, 60, { align: 'center' });
+
+    doc.setLineWidth(2);
+    doc.rect(10, 120, 190, 100);
+    doc.addImage(this.course.imageUrl, 'JPEG', 12, 122, 186, 96);
+
+    doc.save(`${this.course.title} - ${this.userService.getAuthData().userName}.pdf`);
   }
 
   private _colorStars(rating: number) {
