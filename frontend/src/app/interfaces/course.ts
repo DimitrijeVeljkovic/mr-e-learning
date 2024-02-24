@@ -4,7 +4,6 @@ import { Rating } from "./rating";
 import { Section } from "./section";
 
 export interface Course {
-    _id: string;
     courseId: number;
     title: string;
     description: string;

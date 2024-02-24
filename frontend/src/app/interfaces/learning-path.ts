@@ -1,7 +1,6 @@
 import { Course } from "./course";
 
 export interface LearningPath {
-    _id: string;
     learningPathId: number;
     title: string;
     lpCourses: {
