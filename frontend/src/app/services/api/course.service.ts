@@ -35,6 +35,10 @@ export class CourseService {
     return this._http.get(`${API_ROUTES.COURSES.IN_PROGRESS}?userId=${this._userService.getAuthData().userId}`) as Observable<InProgressCourse[]>;
   }
 
+  public getSingleInProgressCourse(courseId: number): Observable<InProgressCourse> {
+    return this._http.get(`${API_ROUTES.COURSES.IN_PROGRESS}/${courseId}?userId=${this._userService.getAuthData().userId}`) as Observable<InProgressCourse>;
+  }
+
   public getCompletedCourses(): Observable<CompletedCourse[]> {
     return this._http.get(`${API_ROUTES.COURSES.FINISH}?userId=${this._userService.getAuthData().userId}`) as Observable<CompletedCourse[]>;
   }

@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewDidEnter } from '@ionic/angular';
-import { combineLatest } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
 import { CourseService } from 'src/app/services/api/course.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -35,15 +35,13 @@ export class CoursePage implements ViewDidEnter {
               public sanitizer: DomSanitizer) { }
 
   ionViewDidEnter() {
-    combineLatest([
-      this._route.params,
-      this._courseService.getInProgressCourses()
-    ]).subscribe(([params, inProgress]) => {
-      const courseId = params['courseId'];
-      const inProgressCourses = inProgress;
-      
-      this.course = inProgressCourses.find(c => c.course.courseId === +courseId)!;
-    });
+    this._route.params
+      .pipe(
+        switchMap(params => this._courseService.getSingleInProgressCourse(+params['courseId']))
+      )
+      .subscribe(res => {
+        this.course = res;
+      })
   }
 
   public handleSegmentChange(event: any) {
