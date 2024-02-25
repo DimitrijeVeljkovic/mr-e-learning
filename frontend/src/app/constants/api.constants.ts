@@ -11,7 +11,8 @@ export const API_ROUTES = {
     USER: {
         BASE: USER_URL,
         LOGIN: `${USER_URL}/login`,
-        SIGNUP: `${USER_URL}/signup`
+        SIGNUP: `${USER_URL}/signup`,
+        VERIFY: `${USER_URL}/verify`
     },
     COURSES: {
         BASE: COURSES_URL,

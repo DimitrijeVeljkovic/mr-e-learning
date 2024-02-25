@@ -19,6 +19,10 @@ export class UserService {
     return this._http.post(API_ROUTES.USER.LOGIN, body) as Observable<{ token: string, result: User }>;
   }
 
+  public verify(body: { verificationCode: string, userId: number }): Observable<{ message: string }> {
+    return this._http.post(API_ROUTES.USER.VERIFY, body) as Observable<{ message: string }>;
+  }
+
   public storeAuthData(token: string, userId: string, userName: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
@@ -57,5 +61,9 @@ export class UserService {
 
   public deleteUser(): Observable<{ message: string }> {
     return this._http.delete(`${API_ROUTES.USER.BASE}/${this.getAuthData().userId}`) as Observable<{ message: string }>;
+  }
+
+  public deleteUserWithId(userId: number): Observable<{ message: string }> {
+    return this._http.delete(`${API_ROUTES.USER.SIGNUP}/${userId}`) as Observable<{ message: string }>;
   }
 }
