@@ -8,6 +8,7 @@
         <ion-card-content>
           <form #signupForm="ngForm" (ngSubmit)="handleSignup(signupForm)">
             <ion-input 
+              [disabled]="shouldShowVerificationCard"
               label="First Name"
               label-placement="floating"
               fill="outline"
@@ -19,6 +20,7 @@
               required>
             </ion-input>
             <ion-input 
+              [disabled]="shouldShowVerificationCard"
               label="Last Name"
               label-placement="floating"
               fill="outline"
@@ -30,6 +32,7 @@
               required>
             </ion-input>
             <ion-input 
+              [disabled]="shouldShowVerificationCard"
               label="Username"
               label-placement="floating"
               fill="outline"
@@ -41,6 +44,7 @@
               required>
             </ion-input>
             <ion-input 
+              [disabled]="shouldShowVerificationCard"
               label="Email"
               label-placement="floating"
               fill="outline"
@@ -52,7 +56,8 @@
               required
               email>
             </ion-input>
-            <ion-input 
+            <ion-input
+              [disabled]="shouldShowVerificationCard"
               label="Password"
               label-placement="floating"
               fill="outline"
@@ -65,7 +70,7 @@
               minlength="8">
             </ion-input>
             <div class="actions">
-              <ion-button type="ngSubmit" [disabled]="!signupForm.valid">Sign Up</ion-button>
+              <ion-button type="ngSubmit" [disabled]="!signupForm.valid || shouldShowVerificationCard">Sign Up</ion-button>
               <span>Already have an account? <a [routerLink]="['/login']">Log in</a></span>
             </div>
           </form>

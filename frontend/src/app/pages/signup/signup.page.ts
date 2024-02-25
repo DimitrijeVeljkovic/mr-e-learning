@@ -15,8 +15,10 @@ export class SignupPage {
   
   private _userIdForVerification: number;
 
-  constructor(private _userService: UserService,
-              private _toastService: ToastService) { }
+  constructor(
+    private _userService: UserService,
+    private _toastService: ToastService
+  ) { }
 
   public handleSignup(form: NgForm) {
     this._userService.signup({ ...form.value })
