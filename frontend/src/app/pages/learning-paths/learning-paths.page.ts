@@ -45,7 +45,7 @@ export class LearningPathsPage implements ViewDidEnter {
           this._router.navigate(['/in-progress', courseId]);
         }, 
         err => {
-          this._toastService.showToast(err.error.message);
+          this._toastService.showToast(err.error.message, 'danger');
         }
       );
   }
@@ -58,7 +58,7 @@ export class LearningPathsPage implements ViewDidEnter {
           this._toastService.showToast(res.message);
         }, 
         err => {
-          this._toastService.showToast(err.error.message);
+          this._toastService.showToast(err.error.message, 'danger');
         }
       );
   }

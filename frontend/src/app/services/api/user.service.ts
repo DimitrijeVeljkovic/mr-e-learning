@@ -62,8 +62,4 @@ export class UserService {
   public deleteUser(): Observable<{ message: string }> {
     return this._http.delete(`${API_ROUTES.USER.BASE}/${this.getAuthData().userId}`) as Observable<{ message: string }>;
   }
-
-  public deleteUserWithId(userId: number): Observable<{ message: string }> {
-    return this._http.delete(`${API_ROUTES.USER.SIGNUP}/${userId}`) as Observable<{ message: string }>;
-  }
 }

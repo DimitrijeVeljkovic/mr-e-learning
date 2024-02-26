@@ -106,7 +106,7 @@ export class CourseCardComponent implements OnInit {
           this._router.navigate(['/in-progress', this.course.courseId]);
         },
         err => {
-          this._toastService.showToast(err.error.message);
+          this._toastService.showToast(err.error.message, 'danger');
         }
       );
   }
@@ -119,7 +119,7 @@ export class CourseCardComponent implements OnInit {
           this._toastService.showToast(res.message);
         }, 
         err => {
-          this._toastService.showToast(err.error.message);
+          this._toastService.showToast(err.error.message, 'danger');
         }
       );
   }

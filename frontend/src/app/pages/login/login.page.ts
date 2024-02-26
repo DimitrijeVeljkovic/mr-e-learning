@@ -41,7 +41,7 @@ export class LoginPage implements ViewDidLeave {
           this._router.navigate(['/courses']);
         },
         err => {
-          this._toastService.showToast(err.error.message);
+          this._toastService.showToast(err.error.message, 'danger');
         }
       );
   }
