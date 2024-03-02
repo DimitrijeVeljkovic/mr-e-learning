@@ -32,18 +32,26 @@ export class CommentsModalComponent {
       userId: +(this.userService.getAuthData().userId || 0),
       comment: form.value.comment
     }, this.course.courseId)
-      .subscribe(res => {
-        this.course.comments?.push(res);
-        form.resetForm();
-      })
+      .subscribe(
+        res => {
+          this.course.comments?.push(res);
+          form.resetForm();
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        })
   }
 
   public deleteComment(comment: Comment) {
     this._commentService.deleteComment(comment.commentId)
-      .subscribe(res => {
-        this.course.comments = this.course.comments?.filter(c => c.commentId !== comment.commentId);
-        this._toastService.showToast(res.message);
-      });
+      .subscribe(
+        res => {
+          this.course.comments = this.course.comments?.filter(c => c.commentId !== comment.commentId);
+          this._toastService.showToast(res.message);
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        });
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,15 @@ import { Comment } from 'src/app/interfaces/comment';
 export class CoursePage implements ViewDidEnter {
   public course: InProgressCourse | null = null;
   public selectedSegment: string = 'content';
+  public disableTest = true;
+
+  @HostListener('scroll', ['$event'])
+  public onScroll($event: any): void {
+    if (this.selectedSegment === 'content' && this.disableTest && $event.target.offsetHeight === $event.target.scrollHeight - $event.target.scrollTop) {
+      this.disableTest = false;
+      this._toastService.showToast('Test is now enabled!');
+    }
+  }
 
   public get myUserName(): string {
     return this._userService.getAuthData().userName || '';
@@ -50,30 +59,28 @@ export class CoursePage implements ViewDidEnter {
 
   public addNote(form: NgForm) {
     this._noteService.addNote(this.course?.course.courseId || 0, form.value)
-      .subscribe(res => {
-        this.course?.notes.push(res.note);
-        form.resetForm();
-      });
+      .subscribe(
+        res => {
+          this.course?.notes.push(res.note);
+          form.resetForm();
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        });
   }
 
   public deleteNote(noteId: number) {
     this._noteService.deleteNote(noteId)
-      .subscribe(res => {
-        if (this.course) {
-          this.course.notes = this.course.notes.filter(note => note.noteId !== noteId);
-        }
-        this._toastService.showToast(res.message);
-      })
-  }
-
-  public deleteComment(comment: Comment) {
-    this._commentService.deleteComment(comment.commentId)
-      .subscribe(res => {
-        if (this.course) {
-          this.course.course.comments = this.course.course.comments?.filter(c => c.commentId !== comment.commentId);
-        }
-        this._toastService.showToast(res.message);
-      })
+      .subscribe(
+        res => {
+          if (this.course) {
+            this.course.notes = this.course.notes.filter(note => note.noteId !== noteId);
+          }
+          this._toastService.showToast(res.message);
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        })
   }
 
   public postComment(form: NgForm) {
@@ -81,12 +88,30 @@ export class CoursePage implements ViewDidEnter {
       userId: +(this._userService.getAuthData().userId || 0),
       comment: form.value.comment
     }, this.course?.course?.courseId || 0)
-      .subscribe(res => {
-        if (this.course && this.course.course) {
-          this.course.course.comments?.push(res);
-        }
-        form.resetForm();
-      });
+      .subscribe(
+        res => {
+          if (this.course && this.course.course) {
+            this.course.course.comments?.push(res);
+          }
+          form.resetForm();
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        });
+  }
+
+  public deleteComment(comment: Comment) {
+    this._commentService.deleteComment(comment.commentId)
+      .subscribe(
+        res => {
+          if (this.course) {
+            this.course.course.comments = this.course.course.comments?.filter(c => c.commentId !== comment.commentId);
+          }
+          this._toastService.showToast(res.message);
+        },
+        err => {
+          this._toastService.showToast(err.error.message, 'danger');
+        })
   }
 
   public handleSubmitTest(form: NgForm) {

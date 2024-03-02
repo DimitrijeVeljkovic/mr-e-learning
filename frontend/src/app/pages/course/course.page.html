@@ -27,7 +27,7 @@
               <small>Comments</small>
             </ion-label>
           </ion-segment-button>
-          <ion-segment-button value="test">
+          <ion-segment-button value="test" [disabled]="disableTest">
             <ion-label>
               <small>Test</small>
             </ion-label>
@@ -61,6 +61,7 @@
                     placeholder="Enter new note..."
                     type="text"
                     name="newNote"
+                    [maxlength]="100"
                     ngModel
                     required>
                 </ion-input>
@@ -124,6 +125,7 @@
               placeholder="Post your comment..."
               type="text"
               name="comment"
+              [maxlength]="100"
               required
               ngModel>
             </ion-input>
