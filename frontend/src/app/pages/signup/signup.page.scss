@@ -1,6 +1,8 @@
 @import '../../mixins/mixins.scss';
 
 :host {
+    overflow-y: auto;
+
     @include background-image-wave;
     @include action-buttons;
 
