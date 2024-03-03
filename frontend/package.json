@@ -8,8 +8,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "private": true,
   "dependencies": {
@@ -33,14 +35,14 @@
     "@angular-eslint/builder": "^16.0.0",
     "@angular-eslint/eslint-plugin": "^16.0.0",
     "@angular-eslint/eslint-plugin-template": "^16.0.0",
-    "@angular-eslint/template-parser": "^16.0.0",
     "@angular-eslint/schematics": "^16.0.0",
+    "@angular-eslint/template-parser": "^16.0.0",
     "@angular/cli": "^16.0.0",
     "@angular/compiler": "^16.0.0",
     "@angular/compiler-cli": "^16.0.0",
     "@angular/language-service": "^16.0.0",
     "@ionic/angular-toolkit": "^9.0.0",
-    "@types/jasmine": "~4.3.0",
+    "@types/jest": "^29.5.12",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
@@ -48,16 +50,26 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
-    "jasmine-core": "~4.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~3.0.2",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
+    "jest": "^29.7.0",
+    "jest-preset-angular": "^14.0.3",
     "ts-node": "^8.3.0",
     "typescript": "~5.0.2"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setup.jest.ts"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/dist/"
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$"
+      }
+    }
   },
   "description": "An Ionic project"
 }
