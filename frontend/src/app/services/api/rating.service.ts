@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_ROUTES } from 'src/app/constants/api.constants';
-import { Rating } from 'src/app/interfaces/rating';
+import { API_ROUTES } from '../../constants/api.constants';
+import { Rating } from '../../interfaces/rating';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LearningPath } from '../../interfaces/learning-path';
-import { API_ROUTES } from 'src/app/constants/api.constants';
+import { API_ROUTES } from '../../constants/api.constants';
 
 @Injectable({
   providedIn: 'root'

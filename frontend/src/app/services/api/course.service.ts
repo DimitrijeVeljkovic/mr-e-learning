@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Course } from '../../interfaces/course';
 import { UserService } from './user.service';
-import { InProgressCourse } from 'src/app/interfaces/in-progress-course';
-import { CompletedCourse } from 'src/app/interfaces/completed-course';
-import { API_ROUTES } from 'src/app/constants/api.constants';
+import { InProgressCourse } from '../../interfaces/in-progress-course';
+import { CompletedCourse } from '../../interfaces/completed-course';
+import { API_ROUTES } from '../../constants/api.constants';
 
 @Injectable({
   providedIn: 'root'
