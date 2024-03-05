@@ -14,17 +14,18 @@ export class CoursesPage implements ViewDidEnter {
   public filteredCourses: Course[];
   public state: State = State.ALL;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private _courseService: CourseService) {}
 
   ionViewDidEnter() {
-    this._courseService.getAllCourses().subscribe(res => {
+    this._courseService.getAllCourses().subscribe((res) => {
       this.allCourses = res;
       this.filteredCourses = res;
     });
   }
 
   public handleSearch(event: any) {
-    this.filteredCourses = this.allCourses.filter(course => course.title.toUpperCase().includes(event.detail.value.toUpperCase()));
+    this.filteredCourses = this.allCourses.filter((course) =>
+      course.title.toUpperCase().includes(event.detail.value.toUpperCase())
+    );
   }
-
 }

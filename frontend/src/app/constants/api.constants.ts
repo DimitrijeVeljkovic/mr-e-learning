@@ -8,30 +8,30 @@ const RATING_URL = `${BASE_URL}/rating`;
 const COMMENT_URL = `${BASE_URL}/comment`;
 
 export const API_ROUTES = {
-    USER: {
-        BASE: USER_URL,
-        LOGIN: `${USER_URL}/login`,
-        SIGNUP: `${USER_URL}/signup`,
-        VERIFY: `${USER_URL}/verify`
-    },
-    COURSES: {
-        BASE: COURSES_URL,
-        BOOKMARK: `${COURSES_URL}/bookmark`,
-        IN_PROGRESS: `${COURSES_URL}/in-progress`,
-        FINISH: `${COURSES_URL}/finish`,
-        COUNT: `${COURSES_URL}/count`,
-        SUBMIT: `${COURSES_URL}/submit`
-    },
-    LEARNING_PATHS: {
-        BASE: LEARNING_PATHS_URL
-    },
-    NOTES: {
-        BASE: NOTES_URL
-    },
-    RATING: {
-        BASE: RATING_URL
-    },
-    COMMENT: {
-        BASE: COMMENT_URL
-    },
-}
+  USER: {
+    BASE: USER_URL,
+    LOGIN: `${USER_URL}/login`,
+    SIGNUP: `${USER_URL}/signup`,
+    VERIFY: `${USER_URL}/verify`,
+  },
+  COURSES: {
+    BASE: COURSES_URL,
+    BOOKMARK: `${COURSES_URL}/bookmark`,
+    IN_PROGRESS: `${COURSES_URL}/in-progress`,
+    FINISH: `${COURSES_URL}/finish`,
+    COUNT: `${COURSES_URL}/count`,
+    SUBMIT: `${COURSES_URL}/submit`,
+  },
+  LEARNING_PATHS: {
+    BASE: LEARNING_PATHS_URL,
+  },
+  NOTES: {
+    BASE: NOTES_URL,
+  },
+  RATING: {
+    BASE: RATING_URL,
+  },
+  COMMENT: {
+    BASE: COMMENT_URL,
+  },
+};

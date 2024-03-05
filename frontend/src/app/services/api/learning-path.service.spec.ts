@@ -9,9 +9,7 @@ describe('LearningPathService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: HttpClient, useClass: MockHttpClient }
-      ]
+      providers: [{ provide: HttpClient, useClass: MockHttpClient }],
     });
     service = TestBed.inject(LearningPathService);
   });
@@ -21,10 +19,15 @@ describe('LearningPathService', () => {
   });
 
   describe('api', () => {
-    it('should call get all learning paths api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'get');
-      service.getAllLearningPaths();
-      expect(http.get).toHaveBeenCalledWith('http://localhost:8080/api/learning-paths');
-    }));
+    it('should call get all learning paths api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'get');
+        service.getAllLearningPaths();
+        expect(http.get).toHaveBeenCalledWith(
+          'http://localhost:8080/api/learning-paths'
+        );
+      }
+    ));
   });
 });

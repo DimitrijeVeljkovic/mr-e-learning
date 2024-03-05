@@ -7,7 +7,7 @@ import { MockHttpClient } from '../../mocks/MockHttpClient';
 const mockAuthData = {
   token: '12345',
   userId: '1',
-  userName: 'test name'
+  userName: 'test name',
 };
 
 describe('UserService', () => {
@@ -15,9 +15,7 @@ describe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: HttpClient, useClass: MockHttpClient }
-      ]
+      providers: [{ provide: HttpClient, useClass: MockHttpClient }],
     });
     service = TestBed.inject(UserService);
   });
@@ -34,7 +32,7 @@ describe('UserService', () => {
         lastName: 'last test',
         userName: 'user test',
         email: 'email@test.com',
-        password: 'passwordTest'
+        password: 'passwordTest',
       });
       expect(http.post).toHaveBeenCalledWith(
         'http://localhost:8080/api/user/signup',
@@ -43,7 +41,7 @@ describe('UserService', () => {
           lastName: 'last test',
           userName: 'user test',
           email: 'email@test.com',
-          password: 'passwordTest'
+          password: 'passwordTest',
         }
       );
     }));
@@ -52,13 +50,13 @@ describe('UserService', () => {
       jest.spyOn(http, 'post');
       service.login({
         email: 'email@test.com',
-        password: 'passwordTest'
+        password: 'passwordTest',
       });
       expect(http.post).toHaveBeenCalledWith(
         'http://localhost:8080/api/user/login',
         {
           email: 'email@test.com',
-          password: 'passwordTest'
+          password: 'passwordTest',
         }
       );
     }));
@@ -67,64 +65,79 @@ describe('UserService', () => {
       jest.spyOn(http, 'post');
       service.verify({
         verificationCode: 'ABCDEF',
-        userId: 1
+        userId: 1,
       });
       expect(http.post).toHaveBeenCalledWith(
         'http://localhost:8080/api/user/verify',
         {
           verificationCode: 'ABCDEF',
-          userId: 1
+          userId: 1,
         }
       );
     }));
 
-    it('should call get user data api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'get');
-      jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
-      service.getUserData();
-      expect(http.get).toHaveBeenCalledWith('http://localhost:8080/api/user/1');
-    }));
+    it('should call get user data api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'get');
+        jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
+        service.getUserData();
+        expect(http.get).toHaveBeenCalledWith(
+          'http://localhost:8080/api/user/1'
+        );
+      }
+    ));
 
-    it('should call update user data api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'put');
-      jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
-      service.updateUserData({
-        firstName: 'first test change',
-        lastName: 'last test change',
-        userName: 'user test change',
-        password: 'passwordTestChange'
-      });
-      expect(http.put).toHaveBeenCalledWith(
-        'http://localhost:8080/api/user/1',
-        {
+    it('should call update user data api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'put');
+        jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
+        service.updateUserData({
           firstName: 'first test change',
           lastName: 'last test change',
           userName: 'user test change',
-          password: 'passwordTestChange'
-        }
-      );
-    }));
+          password: 'passwordTestChange',
+        });
+        expect(http.put).toHaveBeenCalledWith(
+          'http://localhost:8080/api/user/1',
+          {
+            firstName: 'first test change',
+            lastName: 'last test change',
+            userName: 'user test change',
+            password: 'passwordTestChange',
+          }
+        );
+      }
+    ));
 
-    it('should call delete user api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'delete');
-      jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
-      service.deleteUser();
-      expect(http.delete).toHaveBeenCalledWith('http://localhost:8080/api/user/1');
-    }));
+    it('should call delete user api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'delete');
+        jest.spyOn(service, 'getAuthData').mockReturnValue(mockAuthData);
+        service.deleteUser();
+        expect(http.delete).toHaveBeenCalledWith(
+          'http://localhost:8080/api/user/1'
+        );
+      }
+    ));
   });
 
   describe('local storage', () => {
     let localStore: any = {};
 
-    jest.fn(window.localStorage.getItem).mockImplementation((key) =>
-      key in localStore ? localStore[key] : null
-    )
-    jest.fn(window.localStorage.setItem).mockImplementation((key, value) => 
-      localStore[key] = `${value}`
-    );
-    jest.fn(window.localStorage.removeItem).mockImplementation((key) => 
-      delete localStore[key]
-    );
+    jest
+      .fn(window.localStorage.getItem)
+      .mockImplementation((key) =>
+        key in localStore ? localStore[key] : null
+      );
+    jest
+      .fn(window.localStorage.setItem)
+      .mockImplementation((key, value) => (localStore[key] = `${value}`));
+    jest
+      .fn(window.localStorage.removeItem)
+      .mockImplementation((key) => delete localStore[key]);
 
     it('should store auth data', () => {
       service.storeAuthData('010101', '1', 'testUser');
@@ -146,7 +159,7 @@ describe('UserService', () => {
       expect(service.getAuthData()).toStrictEqual({
         token: '010101',
         userId: '1',
-        userName: 'testUser'
+        userName: 'testUser',
       });
     });
 

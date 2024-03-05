@@ -15,8 +15,8 @@ import { CourseCardComponent } from '../../components/course-card/course-card.co
     FormsModule,
     IonicModule,
     InProgressPageRoutingModule,
-    CourseCardComponent
+    CourseCardComponent,
   ],
-  declarations: [InProgressPage]
+  declarations: [InProgressPage],
 })
 export class InProgressPageModule {}

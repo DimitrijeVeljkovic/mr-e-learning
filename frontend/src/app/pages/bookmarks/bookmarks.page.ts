@@ -13,12 +13,11 @@ export class BookmarksPage implements ViewDidEnter {
   public bookmarkedCourses: Course[];
   public state: State = State.BOOKMARKED;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private _courseService: CourseService) {}
 
   ionViewDidEnter() {
-    this._courseService.getBookmarkedCourses().subscribe(res => {
-      this.bookmarkedCourses = res.map(r => r.course);
+    this._courseService.getBookmarkedCourses().subscribe((res) => {
+      this.bookmarkedCourses = res.map((r) => r.course);
     });
   }
-
 }

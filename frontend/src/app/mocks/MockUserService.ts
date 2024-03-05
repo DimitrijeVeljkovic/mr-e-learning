@@ -1,41 +1,41 @@
-import { of } from "rxjs";
+import { of } from 'rxjs';
 
 export class MockUserService {
-    public signup() {
-        return of(null);
-    }
+  public signup() {
+    return of(null);
+  }
 
-    public login() {
-        return of(null);
-    }
+  public login() {
+    return of(null);
+  }
 
-    public verify() {
-        return of(null);
-    }
+  public verify() {
+    return of(null);
+  }
 
-    public storeAuthData() {}
+  public storeAuthData() {}
 
-    public clearAuthData() {}
+  public clearAuthData() {}
 
-    public getAuthData() {
-        return null
-    }
+  public getAuthData() {
+    return null;
+  }
 
-    public changeUserName() {}
+  public changeUserName() {}
 
-    public isAuthenticated() {
-        return null;
-    }
+  public isAuthenticated() {
+    return null;
+  }
 
-    public getUserData() {
-        return of(null);
-    }
+  public getUserData() {
+    return of(null);
+  }
 
-    public updateUserData() {
-        return of(null);
-    }
+  public updateUserData() {
+    return of(null);
+  }
 
-    public deleteUser() {
-        return of(null);
-    }
+  public deleteUser() {
+    return of(null);
+  }
 }

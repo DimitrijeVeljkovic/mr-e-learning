@@ -6,8 +6,8 @@ import { CompletedPage } from './completed.page';
 const routes: Routes = [
   {
     path: '',
-    component: CompletedPage
-  }
+    component: CompletedPage,
+  },
 ];
 
 @NgModule({

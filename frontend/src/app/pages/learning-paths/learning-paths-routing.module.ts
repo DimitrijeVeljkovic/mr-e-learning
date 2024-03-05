@@ -6,8 +6,8 @@ import { LearningPathsPage } from './learning-paths.page';
 const routes: Routes = [
   {
     path: '',
-    component: LearningPathsPage
-  }
+    component: LearningPathsPage,
+  },
 ];
 
 @NgModule({

@@ -13,12 +13,11 @@ export class InProgressPage implements ViewDidEnter {
   public inProgressCourses: Course[];
   public state: State = State.IN_PROGRESS;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private _courseService: CourseService) {}
 
   ionViewDidEnter() {
-    this._courseService.getInProgressCourses().subscribe(res => {
-      this.inProgressCourses = res.map(r => r.course);
+    this._courseService.getInProgressCourses().subscribe((res) => {
+      this.inProgressCourses = res.map((r) => r.course);
     });
   }
-
 }

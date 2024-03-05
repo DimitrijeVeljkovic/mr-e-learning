@@ -15,8 +15,8 @@ import { CourseCardComponent } from '../../components/course-card/course-card.co
     FormsModule,
     IonicModule,
     BookmarksPageRoutingModule,
-    CourseCardComponent
+    CourseCardComponent,
   ],
-  declarations: [BookmarksPage]
+  declarations: [BookmarksPage],
 })
 export class BookmarksPageModule {}

@@ -13,12 +13,11 @@ export class CompletedPage implements ViewDidEnter {
   public completedCourses: CompletedCourse[];
   public state: State = State.COMPLETED;
 
-  constructor(private _courseService: CourseService) { }
+  constructor(private _courseService: CourseService) {}
 
   ionViewDidEnter() {
-    this._courseService.getCompletedCourses().subscribe(res => {
+    this._courseService.getCompletedCourses().subscribe((res) => {
       this.completedCourses = res;
     });
   }
-
 }

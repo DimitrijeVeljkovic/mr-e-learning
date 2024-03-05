@@ -13,8 +13,8 @@ import { LearningPathsPage } from './learning-paths.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    LearningPathsPageRoutingModule
+    LearningPathsPageRoutingModule,
   ],
-  declarations: [LearningPathsPage]
+  declarations: [LearningPathsPage],
 })
 export class LearningPathsPageModule {}

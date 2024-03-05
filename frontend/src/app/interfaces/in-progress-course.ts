@@ -1,6 +1,6 @@
-import { Course } from "./course";
+import { Course } from './course';
 
 export interface InProgressCourse {
-    course: Course;
-    notes: { noteId: number, note: string }[];
+  course: Course;
+  notes: { noteId: number; note: string }[];
 }

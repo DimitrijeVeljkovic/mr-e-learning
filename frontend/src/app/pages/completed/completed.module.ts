@@ -15,8 +15,8 @@ import { CourseCardComponent } from '../../components/course-card/course-card.co
     FormsModule,
     IonicModule,
     CompletedPageRoutingModule,
-    CourseCardComponent
+    CourseCardComponent,
   ],
-  declarations: [CompletedPage]
+  declarations: [CompletedPage],
 })
 export class CompletedPageModule {}

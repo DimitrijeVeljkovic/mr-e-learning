@@ -9,13 +9,17 @@ import { CourseService } from './services/api/course.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private _router: Router,
-              public courseService: CourseService,
-              public userService: UserService) {}
+  constructor(
+    private _router: Router,
+    public courseService: CourseService,
+    public userService: UserService
+  ) {}
 
   ngOnInit() {
-    const userId = this.userService.isAuthenticated() ? this.userService.getAuthData().userId : null;
-    this.courseService.getCounts(userId).subscribe(res => {
+    const userId = this.userService.isAuthenticated()
+      ? this.userService.getAuthData().userId
+      : null;
+    this.courseService.getCounts(userId).subscribe((res) => {
       this.courseService.courseCounter$.next(res.courseCount);
       this.courseService.learningPathCounter$.next(res.learningPathCount);
 
@@ -31,5 +35,4 @@ export class AppComponent implements OnInit {
     this.userService.clearAuthData();
     this._router.navigate(['/courses']);
   }
-
 }

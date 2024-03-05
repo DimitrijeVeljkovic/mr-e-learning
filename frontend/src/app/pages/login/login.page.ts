@@ -12,15 +12,18 @@ import { UserService } from 'src/app/services/api/user.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements ViewDidLeave {
-
-  constructor(private _userService: UserService,
-              private _courseService: CourseService,
-              private _router: Router,
-              private _toastService: ToastService) { }
+  constructor(
+    private _userService: UserService,
+    private _courseService: CourseService,
+    private _router: Router,
+    private _toastService: ToastService
+  ) {}
 
   ionViewDidLeave() {
-    const userId = this._userService.isAuthenticated() ? this._userService.getAuthData().userId : null;
-    this._courseService.getCounts(userId).subscribe(res => {
+    const userId = this._userService.isAuthenticated()
+      ? this._userService.getAuthData().userId
+      : null;
+    this._courseService.getCounts(userId).subscribe((res) => {
       this._courseService.courseCounter$.next(res.courseCount);
       this._courseService.learningPathCounter$.next(res.learningPathCount);
 
@@ -33,16 +36,19 @@ export class LoginPage implements ViewDidLeave {
   }
 
   public handleLogin(form: NgForm) {
-    this._userService.login({ ...form.value })
-      .subscribe(
-        res => {
-          form.resetForm();
-          this._userService.storeAuthData(res.token, res.result.userId || '', res.result.userName || '');
-          this._router.navigate(['/courses']);
-        },
-        err => {
-          this._toastService.showToast(err.error.message, 'danger');
-        }
-      );
+    this._userService.login({ ...form.value }).subscribe(
+      (res) => {
+        form.resetForm();
+        this._userService.storeAuthData(
+          res.token,
+          res.result.userId || '',
+          res.result.userName || ''
+        );
+        this._router.navigate(['/courses']);
+      },
+      (err) => {
+        this._toastService.showToast(err.error.message, 'danger');
+      }
+    );
   }
 }

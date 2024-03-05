@@ -1,7 +1,7 @@
-import { Course } from "./course";
+import { Course } from './course';
 
 export interface CompletedCourse {
-    course: Course;
-    date: string;
-    percentage: number;
+  course: Course;
+  date: string;
+  percentage: number;
 }

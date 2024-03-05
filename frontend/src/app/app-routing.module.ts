@@ -4,58 +4,77 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
-  { 
-    path: 'courses', 
-    loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesPageModule)
+  {
+    path: 'courses',
+    loadChildren: () =>
+      import('./pages/courses/courses.module').then((m) => m.CoursesPageModule),
   },
   {
     path: 'learning-paths',
-    loadChildren: () => import('./pages/learning-paths/learning-paths.module').then( m => m.LearningPathsPageModule)
+    loadChildren: () =>
+      import('./pages/learning-paths/learning-paths.module').then(
+        (m) => m.LearningPathsPageModule
+      ),
   },
   {
     path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
+    loadChildren: () =>
+      import('./pages/signup/signup.module').then((m) => m.SignupPageModule),
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'in-progress',
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/in-progress/in-progress.module').then( m => m.InProgressPageModule)
+        loadChildren: () =>
+          import('./pages/in-progress/in-progress.module').then(
+            (m) => m.InProgressPageModule
+          ),
       },
       {
         path: ':courseId',
-        loadChildren: () => import('./pages/course/course.module').then( m => m.CoursePageModule)
-      }
+        loadChildren: () =>
+          import('./pages/course/course.module').then(
+            (m) => m.CoursePageModule
+          ),
+      },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'bookmarks',
-    loadChildren: () => import('./pages/bookmarks/bookmarks.module').then( m => m.BookmarksPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./pages/bookmarks/bookmarks.module').then(
+        (m) => m.BookmarksPageModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'completed',
-    loadChildren: () => import('./pages/completed/completed.module').then( m => m.CompletedPageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./pages/completed/completed.module').then(
+        (m) => m.CompletedPageModule
+      ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canActivate: [AuthGuard]
+    loadChildren: () =>
+      import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
+    canActivate: [AuthGuard],
   },
-  { path: '**', redirectTo: 'courses' }
+  { path: '**', redirectTo: 'courses' },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

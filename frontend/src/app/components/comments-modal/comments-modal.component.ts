@@ -13,45 +13,53 @@ import { ToastService } from 'src/app/services/toast.service';
   templateUrl: './comments-modal.component.html',
   styleUrls: ['./comments-modal.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule],
 })
 export class CommentsModalComponent {
   @Input() public course: Course;
 
-  constructor(private _modalController: ModalController,
-              private _commentService: CommentService,
-              private _toastService: ToastService,
-              public userService: UserService) { }
+  constructor(
+    private _modalController: ModalController,
+    private _commentService: CommentService,
+    private _toastService: ToastService,
+    public userService: UserService
+  ) {}
 
   public close() {
     return this._modalController.dismiss(null, 'cancel');
   }
 
   public postComment(form: NgForm) {
-    this._commentService.postComment({
-      userId: +(this.userService.getAuthData().userId || 0),
-      comment: form.value.comment
-    }, this.course.courseId)
+    this._commentService
+      .postComment(
+        {
+          userId: +(this.userService.getAuthData().userId || 0),
+          comment: form.value.comment,
+        },
+        this.course.courseId
+      )
       .subscribe(
-        res => {
+        (res) => {
           this.course.comments?.push(res);
           form.resetForm();
         },
-        err => {
+        (err) => {
           this._toastService.showToast(err.error.message, 'danger');
-        })
+        }
+      );
   }
 
   public deleteComment(comment: Comment) {
-    this._commentService.deleteComment(comment.commentId)
-      .subscribe(
-        res => {
-          this.course.comments = this.course.comments?.filter(c => c.commentId !== comment.commentId);
-          this._toastService.showToast(res.message);
-        },
-        err => {
-          this._toastService.showToast(err.error.message, 'danger');
-        });
+    this._commentService.deleteComment(comment.commentId).subscribe(
+      (res) => {
+        this.course.comments = this.course.comments?.filter(
+          (c) => c.commentId !== comment.commentId
+        );
+        this._toastService.showToast(res.message);
+      },
+      (err) => {
+        this._toastService.showToast(err.error.message, 'danger');
+      }
+    );
   }
-
 }

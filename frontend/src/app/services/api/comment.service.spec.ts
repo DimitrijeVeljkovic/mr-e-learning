@@ -9,9 +9,7 @@ describe('CommentService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        { provide: HttpClient, useClass: MockHttpClient }
-      ]
+      providers: [{ provide: HttpClient, useClass: MockHttpClient }],
     });
     service = TestBed.inject(CommentService);
   });
@@ -21,19 +19,27 @@ describe('CommentService', () => {
   });
 
   describe('api', () => {
-    it('should call post comment api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'post');
-      service.postComment({ userId: 1, comment: 'test comment' }, 2);
-      expect(http.post).toHaveBeenCalledWith(
-        'http://localhost:8080/api/comment?courseId=2', 
-        { userId: 1, comment: 'test comment' }
-      );
-    }));
+    it('should call post comment api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'post');
+        service.postComment({ userId: 1, comment: 'test comment' }, 2);
+        expect(http.post).toHaveBeenCalledWith(
+          'http://localhost:8080/api/comment?courseId=2',
+          { userId: 1, comment: 'test comment' }
+        );
+      }
+    ));
 
-    it('should call delete comment api', inject([HttpClient], (http: HttpClient) => {
-      jest.spyOn(http, 'delete');
-      service.deleteComment(100);
-      expect(http.delete).toHaveBeenCalledWith('http://localhost:8080/api/comment/100');
-    }));
+    it('should call delete comment api', inject(
+      [HttpClient],
+      (http: HttpClient) => {
+        jest.spyOn(http, 'delete');
+        service.deleteComment(100);
+        expect(http.delete).toHaveBeenCalledWith(
+          'http://localhost:8080/api/comment/100'
+        );
+      }
+    ));
   });
 });
