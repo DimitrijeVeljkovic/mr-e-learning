@@ -26,7 +26,7 @@ export class SignupPage {
       },
       (err) => {
         this.shouldShowVerificationCard = false;
-        this._toastService.showToast(err.error.message, 'danger');
+        this._toastService.showToast(err.error.error, 'danger');
       }
     );
   }

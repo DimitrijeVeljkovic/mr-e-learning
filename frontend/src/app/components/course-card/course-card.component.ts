@@ -139,7 +139,7 @@ export class CourseCardComponent implements OnInit {
           this._toastService.showToast(res.message);
         },
         (err) => {
-          this._toastService.showToast(err.error.message, 'danger');
+          this._toastService.showToast(err.error.error, 'danger');
         }
       );
   }

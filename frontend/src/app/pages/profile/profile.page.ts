@@ -46,10 +46,15 @@ export class ProfilePage implements ViewDidEnter {
   }
 
   public changeUserData(form: NgForm) {
-    this._userService.updateUserData(form.value).subscribe((res) => {
-      this._userService.changeUserName(res.user.userName || '');
-      this._toastService.showToast(res.message);
-    });
+    this._userService.updateUserData(form.value).subscribe(
+      (res) => {
+        this._userService.changeUserName(res.user.userName || '');
+        this._toastService.showToast(res.message);
+      },
+      (err) => {
+        this._toastService.showToast(err.error.error, 'danger');
+      }
+    );
   }
 
   public deleteUser() {
