@@ -1,5 +1,7 @@
+@import '../../mixins/mixins.scss';
+
 :host {
-    overflow-y: auto;
+    @include page-overflow;
 
     .main-grid {
         width: 100vw;

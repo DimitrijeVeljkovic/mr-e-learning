@@ -30,3 +30,8 @@
         }
     }
 }
+
+@mixin page-overflow {
+    overflow-y: auto;
+    overflow-x: hidden;
+}

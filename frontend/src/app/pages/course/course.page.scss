@@ -1,8 +1,8 @@
 @import '../../mixins/mixins.scss';
 
 :host {
-    overflow-y: auto;
-    overflow-x: hidden;
+    @include page-overflow;
+
     justify-content: flex-start;
 
     .main-grid {

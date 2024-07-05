@@ -1,5 +1,7 @@
+@import '../../mixins/mixins.scss';
+
 :host {
-    overflow-y: auto;
+    @include page-overflow;
 
     ion-grid {
         width: 100vw;

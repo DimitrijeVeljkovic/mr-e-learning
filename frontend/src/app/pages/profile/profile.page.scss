@@ -1,6 +1,7 @@
 @import '../../mixins/mixins.scss';
 
 :host {
+    @include page-overflow;
     @include background-image-wave;
 
     ion-grid {
