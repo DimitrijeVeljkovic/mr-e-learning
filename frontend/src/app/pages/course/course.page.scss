@@ -2,6 +2,7 @@
 
 :host {
     overflow-y: auto;
+    overflow-x: hidden;
     justify-content: flex-start;
 
     .main-grid {
